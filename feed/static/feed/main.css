@@ -1,0 +1,299 @@
+@charset "UTF-8";
+
+:root {
+  --bs-blue: #0d6efd;
+  --bs-indigo: #6610f2;
+  --bs-purple: #7464a1;
+  --bs-pink: #d63384;
+  --bs-red: #a16468;
+  --bs-orange: #fd7e14;
+  --bs-yellow: #e4c662;
+  --bs-green: #67c29c;
+  --bs-teal: #64a19d;
+  --bs-cyan: #1cabc4;
+  --bs-black: #000;
+  --bs-white: #fff;
+  --bs-gray: #6c757d;
+  --bs-gray-dark: #343a40;
+  --bs-gray-100: #f8f9fa;
+  --bs-gray-200: #e9ecef;
+  --bs-gray-300: #dee2e6;
+  --bs-gray-400: #ced4da;
+  --bs-gray-500: #adb5bd;
+  --bs-gray-600: #6c757d;
+  --bs-gray-700: #495057;
+  --bs-gray-800: #343a40;
+  --bs-gray-900: #212529;
+  --bs-primary: #64a19d;
+  --bs-secondary: #7464a1;
+  --bs-success: #67c29c;
+  --bs-info: #1cabc4;
+  --bs-warning: #e4c662;
+  --bs-danger: #a16468;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+  --bs-black: #000;
+  --bs-white: #fff;
+  --bs-primary-rgb: 100, 161, 157;
+  --bs-secondary-rgb: 116, 100, 161;
+  --bs-success-rgb: 103, 194, 156;
+  --bs-info-rgb: 28, 171, 196;
+  --bs-warning-rgb: 228, 198, 98;
+  --bs-danger-rgb: 161, 100, 104;
+  --bs-light-rgb: 248, 249, 250;
+  --bs-dark-rgb: 33, 37, 41;
+  --bs-black-rgb: 0, 0, 0;
+  --bs-white-rgb: 255, 255, 255;
+  --bs-white-rgb: 255, 255, 255;
+  --bs-black-rgb: 0, 0, 0;
+  --bs-body-color-rgb: 33, 37, 41;
+  --bs-body-bg-rgb: 255, 255, 255;
+  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  --bs-body-font-family: Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  --bs-body-font-size: 1rem;
+  --bs-body-font-weight: 400;
+  --bs-body-line-height: 1.5;
+  --bs-body-color: #212529;
+  --bs-body-bg: #fff;
+  --bs-border-width: 1px;
+  --bs-border-style: solid;
+  --bs-border-color: #dee2e6;
+  --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
+  --bs-border-radius: 0.375rem;
+  --bs-border-radius-sm: 0.25rem;
+  --bs-border-radius-lg: 0.5rem;
+  --bs-border-radius-xl: 1rem;
+  --bs-border-radius-2xl: 2rem;
+  --bs-border-radius-pill: 50rem;
+  --bs-link-color: #64a19d;
+  --bs-link-hover-color: #50817e;
+  --bs-code-color: #d63384;
+  --bs-highlight-bg: #faf4e0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: smooth;
+  }
+}
+
+#neubar {
+	      background: #fae8d2;
+	      box-shadow: 4px 6px 12px rgba(0,0,0,0.4);
+        font-family:Sans-serif;
+	    }
+	    
+	    .nav-item .active {
+	      border-radius: 6px;
+	      background: linear-gradient(145deg, #ffe7ca, #f5d7b2);
+        font-family:Sans-serif;
+	     
+	    }
+	    #neubar .dropdown-menu a:hover {
+	      color: #ffdcdc
+	    }
+	    #neubar .nav-item {
+	      margin : auto 4px;
+        font-family:Sans-serif;
+	    }
+	    #neubar a {
+        font-family:Sans-serif;
+	      padding-left:12px;
+	      padding-right:12px;
+	    }
+	    #neubar .dropdown-menu {
+	      background : #f5d7b2
+	    }
+	    a.navbar-brand {
+        font-family:Sans-serif;
+	      color: #454545
+	    }
+
+      #neubar {
+	      background: #161616;
+	      box-shadow: 4px 6px 12px rgba(0,0,0,0.4)
+	    }
+	    
+	    
+	    #neubar .dropdown-menu a:hover {
+	      color: #adb259
+	    }
+	    #neubar .nav-item {
+	      margin : auto 4px;
+        font-family:Sans-serif;
+	    }
+	    #neubar a {
+        font-family:Sans-serif;
+	      padding-left:12px;
+	      padding-right:12px;
+	    }
+	    #neubar .dropdown-menu {
+	      background : #f5d7b2
+	    }
+	    a.navbar-brand {
+	      color: #f2ffe1;
+        font-family:Sans-serif;
+	    }
+
+
+
+.layout-container {
+  display: grid;
+  grid-template-columns: auto 25%;
+  /*grid-template-columns: auto 300px;*/
+  grid-column-gap: 30px;
+}
+.lists-container {
+  display: flex;
+}
+
+.list1, .list2 {
+  display: inline-block;
+  margin-right: 20px; 
+}
+
+.info-box {
+  background-color: rgb(247, 233, 218); 
+  font-family:Sans-serif;
+  padding: 20px;
+  border: 1px solid #ffffff;
+}
+.top-posts-strip {
+  background-color: #333; /* Background color */
+  color: #fff; /* Text color */
+  padding: 10px; 
+}
+
+.top-posts-strip h2 {
+  font-size: 20px; /* Title font size */
+}
+
+.top-posts-strip ul {
+  list-style: none; /* Remove list bullets */
+  padding: 0;
+}
+
+.top-posts-strip li {
+  margin-bottom: 5px; /* Spacing between list items */
+}
+
+
+.top-posts-strip li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-posts-strip li::before {
+  content: "\2022"; /* Bullet character */
+  margin-right: 5px; /* Spacing between bullet and text */
+  font-size: 16px; /* Bullet size */
+}
+
+/* Style for individual list item text */
+.top-posts-strip li span {
+  font-weight: bold;
+}
+
+/* Hover effect for list items */
+.top-posts-strip li:hover {
+  background-color: #555; /* Background color on hover */
+}
+
+.info-box p {
+  padding-left: 20px;
+  padding: 10px 
+}
+
+body {
+    background: #fafafa;
+    color: #333333;
+    margin-top: 5rem;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+  }
+  
+  ul {
+    margin: 0;
+  }
+  
+  .bg-steel {
+    background-color: #5f788a;
+  }
+  
+  .site-header .navbar-nav .nav-link {
+    color: #cbd5db;
+  }
+  
+  .site-header .navbar-nav .nav-link:hover {
+    color: #ffffff;
+  }
+  
+  .site-header .navbar-nav .nav-link.active {
+    font-weight: 500;
+  }
+  
+  .content-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+  }
+  
+  .article-title {
+    color: #444444;
+  }
+  
+  a.article-title:hover {
+    color: #428bca;
+    text-decoration: none;
+  }
+  
+  .article-content {
+    white-space: pre-line;
+  }
+  
+  .article-img {
+    height: 65px;
+    width: 65px;
+    margin-right: 16px;
+  }
+  
+  .article-metadata {
+    padding-bottom: 1px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #e3e3e3
+  }
+  
+  .article-metadata a:hover {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .article-svg {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+  }
+  
+  .account-img {
+    height: 125px;
+    width: 125px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .account-heading {
+    font-size: 2.5rem;
+  }

@@ -1,0 +1,87 @@
+{% extends "feed/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="content-section" style="background-color:Linen ;">
+        <div class="media">
+        
+        <img class="rounded account-img" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.username }}</h2>
+     
+
+        
+           
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+        </div>
+        <section style="background-color: #eee;">
+            <div class="container py-5">
+              <div class="row">
+                <div class="col">
+                  <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                      <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+          
+             
+                <div class="col-lg-8">
+                  <div class="card mb-4">
+                    <div class="dropdown-wrapper d-flex justify-content-between">
+                        <div class="dropdown mr-3">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user.profile.get_followers.count }} Followers
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <ul>
+                                    {% for follower in user.profile.get_followers %}
+                                      <li class="dropdown-item"> <img class="rounded-circle account-img"alt="avatar" class="img-fluid"
+                                        style="height: 30px; width: 30px; border-radius: 10px;"  src="{{ follower.profile.image.url }}" ><a href="{% url 'user-posts' follower.username %}">{{ follower.username }}</a></li>  
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="dropdown ml-1">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user.profile.get_following.count }} Following
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <ul>
+                                    {% for following in user.profile.get_following %}
+                                      <li class="dropdown-item">                                     <img class="rounded-circle account-img"alt="avatar" class="img-fluid"
+                                        style="height: 30px; width: 30px; border-radius: 10;"  src="{{ following.profile.image.url }}" >
+                                        <a href="{% url 'user-posts' following.username %}">{{ following.username }}</a></li>  
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        
+                      <div class="row">
+                        <form method="POST" enctype='multipart/form-data'>
+                            {% csrf_token %}
+                            <fieldset class="form-group">
+                                <legend class="border-bottom mb-4">Edit Info</legend>
+                                {{ u_form|crispy }}
+                                {{ p_form|crispy }}
+                            </fieldset>
+                            <div class="form-group">
+                                <button class="btn btn-outline-info" type="submit">Update</button>
+                            </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </section>
+        <!-- FORM HERE -->
+        
+    </div>
+{% endblock content %}

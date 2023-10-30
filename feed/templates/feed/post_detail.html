@@ -1,0 +1,80 @@
+{% extends "feed/base.html" %}
+
+{% block content %}
+   
+        <article class="media content-section" style="background-color:Linen ;">
+            <img class="rounded article-img" src="{{ object.author.profile.image.url }}">
+            
+            <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+                <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+                {% if object.author == user %}
+                    <div>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
+            <h2 class="article-title">{{ object.title }}</h2>
+            <p class="article-content">{{ object.content }}</p>
+            {% if object.meme %}
+                <img src="{{ object.meme }}" width="500" height="600"> 
+            {% endif %}
+            
+            </div>
+            <section>
+        {% if user.is_authenticated %}
+        <form action="{% url 'post-detail' post.id %}" method="POST">
+            {% csrf_token %}
+            {% if not is_liked %}
+            <button type="submit" name="like" class="btn btn-primary btn-sm"><i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i></button> 
+            {% else %}
+            <button type="submit" name="unlike" class="btn btn-info btn-sm"><i class="far fa-thumbs-down mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i></button>
+            {% endif %}
+        </form>
+        {% else %}
+        <p>Log in to like</p>
+        {% endif %}
+        <!-- Display total likes -->
+        <p>{{ post.post_likes.count }} Likes</p>
+      </section>
+        </article>   
+        <section>   
+            <div class="row d-flex justify-content-left" >
+                <div class="col-md-20 col-lg-20">
+                  <div class="card shadow-0 border" style="background-color:Linen;">
+                  
+                    <div class="card-body p-4">
+                      <p>{{ comments.count }} comments</p>    
+                        <div class="form-outline mb-4">
+                            <form method="post" action="{% url 'post-comment' object.pk %}">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                            </form>
+                        </div>
+                      {% for comment in comments %}
+                      <div class="card mb-4">
+                        <div class="card-body">
+                          <p>{{ comment.body }}</p>
+              
+                          <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row align-items-center">
+                              <img src="{{ comment.author.profile.image.url }}" alt="avatar" width="25"
+                                height="25" />
+                              <p class="small mb-0 ms-2">{{ comment.author }}</p>
+                            </div>
+                            <div class="d-flex flex-row align-items-center">
+                              <p class="small text-muted mb-0">{{ comment.created_on|date:"F d, Y H:i" }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+{% endblock content %}

@@ -1,0 +1,121 @@
+{% extends "feed/base.html" %}
+
+{% block content %}
+
+    
+    <div class="content-section" style="background-color:Linen ;">
+
+       
+           
+              <div class="row d-flex justify-content-left align-items-left h-100">
+                <div class="col col-md-9 col-lg-7 col-xl-5">
+                  <div class="card" style="border-radius: 15px;">
+                    <div class="card-body p-4">
+                        {% with post1=user_posts.0 %}
+                      <div class="d-flex text-black">
+                        <div class="flex-shrink-0">
+                          <img src="{{ post1.author.profile.image.url }}"
+                            alt="avatar" class="img-fluid"
+                            style="width: 180px; border-radius: 10px;">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                          <h5 class="mb-1">{{ view.kwargs.username }}</h5>
+                          <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                            style="background-color: #ffe7ca;">
+                            <div>
+                              <p class="small text-muted mb-1">Posts</p>
+                              <p class="mb-0">{{ page_obj.paginator.count }}</p>
+                            </div>
+                            <div class="px-3">
+                              <p class="small text-muted mb-1">Followers</p>
+                              <p class="mb-0">{{ post1.author.profile.get_followers.count }}</p>
+                            </div>
+                            <div>
+                              <p class="small text-muted mb-1">DankScore</p>
+                              <p class="mb-0">{{ total_likes }}</p>
+                            </div>
+                          </div>
+                          <div class="d-flex pt-1">
+                            {% if request.user != post1.author %}
+                            {% if request.user in post1.author.profile.followers.all %}
+                               <button class= 'btn btn-primary flex-grow-1' onclick="window.location='{% url 'unfollow' post1.author.profile.id %}'">Unfollow</button>
+                            {% else %}
+                                <button class= 'btn btn-primary flex-grow-1' onclick="window.location='{% url 'follow' post1.author.profile.id %}'">Follow</button>
+                            {% endif %}
+                            {% endif %}
+                            
+                          
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           View followers ( {{ post1.author.profile.get_followers.count }} ) 
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <ul>
+                                {% for follower in post1.author.profile.get_followers %}
+                                  <li class="dropdown-item"><img class="rounded-circle account-img"alt="avatar" class="img-fluid"
+                                    style="height: 30px; width: 30px; border-radius: 10px;"  src="{{ follower.profile.image.url }}" ><a href="{% url 'user-posts' follower.username %}">{{ follower.username }}</a></li>  
+                                {% endfor %}
+                            </ul>
+                        </div>
+                      </div>
+                    </div>
+                    {% endwith %}
+              </div>
+            </div>
+
+            </div>
+          </div>
+        <div class="media-dark">
+       
+    </div>
+        {% for post in user_posts %}
+            <article class="media content-section" style="background-color:Linen ;">
+                <img class="rounded article-img" src="{{ post.author.profile.image.url }}">
+                <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                </div>
+                <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+                {% if post.meme %}
+                <img src="{{ post.meme }}" width="200" height="300"> 
+                {% endif %}
+                </div>
+                {% if user.is_authenticated %}
+                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
+                <p><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.post_likes.count }} Likes</a></p>
+                {% else %}
+                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
+                <p><span title=" Log in to like "><a class="article-title"href="{% url 'login' %}">{{ post.post_likes.count }} Likes</a></span></p>
+                {% endif %}
+            </article>
+        {% endfor %}
+        {% if is_paginated %}
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+
+                {% endif %}
+
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+
+        {% endif %}
+    <section>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "feed/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-memes' %}">View Available Template IDs</a>
+    
+    </div>
+    <div class="content-section" style="background-color:Linen ;">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Post a meme</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Post</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

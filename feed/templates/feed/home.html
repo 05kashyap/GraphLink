@@ -1,0 +1,109 @@
+{% extends "feed/base.html" %}
+
+{% block content %}
+
+
+    
+<div class="card-deck" >
+   
+    <div class="card mb-3">
+        {% if top %}
+        <img class="card-img-top" src="{{ top.meme }}" alt="Card image cap"  width="962" height="300">
+        <div class="card-body" style="background-color:Linen ;">
+        <h5 class="card-title">Featured Post</h5>
+        <div class="article-metadata">
+        </div>
+        <p class="article-title" >        <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
+            {{ top.post_likes.count }} Likes</a></p>
+        <img class="rounded article-img" src="{{ top.author.profile.image.url }}">
+        <p class="card-text">Posted by {{ top.author }}</p>
+        <p class="card-text">{{ top.title }}</p>
+        <div class="article-metadata">
+        </div>
+        {% if user.is_authenticated %}
+        <a href="{% url 'post-detail' top.id %}" class="btn btn-primary">View meme</a>
+        {% else  %}
+        <a href="{% url 'login' %}" class="btn btn-primary">Login to view meme</a>
+        {% endif %}
+        <p class="card-text"><small class="text-muted">Posted on {{ top.date_posted|date:"F d, Y" }}</small></p>
+        {% else %}
+        <h1>Be the first to post</h1>
+        {% endif %}
+        </div>
+      </div>
+    
+    
+    </div>
+  </div>
+
+    <section>
+        <div class="row">
+            
+            <div class="col-md-8">
+     
+
+           
+          
+
+        {% for post in posts %}
+            <article class="media content-section" style="background-color:Linen ;">
+                <img class="rounded article-img" src="{{ post.author.profile.image.url }}">
+                <div class="media-body">
+                <div class="article-metadata">
+                    {% if user.is_authenticated %}
+                    <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                    {% else %}
+                    <span title=" Log in to view user profile "><a class="mr-2" href="{% url 'login' %}">{{ post.author }}</a></span>
+                    {% endif %}
+                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                </div>
+                {% if user.is_authenticated %}
+                <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                {% else %}
+                <h2><span title=" Log in to view likes "><a class="article-title" href="{% url 'login' %}">{{ post.title }}</a></span></h2>
+                {% endif %}
+                {% if post.meme %}
+                <img src="{{ post.meme }}" width="300" height="330"> 
+                {% endif %}
+                </div>
+                {% if user.is_authenticated %}
+                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
+                <p><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.post_likes.count }} Likes</a></p>
+                {% else %}
+                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
+                <p><span title=" Log in to like "><a class="article-title"href="{% url 'login' %}">{{ post.post_likes.count }} Likes</a></span></p>
+                {% endif %}
+            </article>
+           
+            
+        {% endfor %}
+        {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary mb-4" href="?page=1">First</a>
+            <a class="btn btn-primary mb-4" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-primary mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="btn btn-outline-primary mb-4" href="?page={{ num }}">{{ num }}</a>
+
+            {% endif %}
+
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <a class="btn btn-outline-primary mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-primary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+
+    {% endif %}
+    
+
+        </section>
+      
+       
+
+    
+{% endblock content %}
