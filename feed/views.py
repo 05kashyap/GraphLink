@@ -242,3 +242,8 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
+def allusers(request):
+    users = User.objects.all()
+    context = {'users': users}
+    return render(request, 'feed/allusers.html', context)#html template
+
