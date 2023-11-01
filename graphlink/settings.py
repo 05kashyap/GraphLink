@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'graph.apps.GraphConfig',
     'users.apps.UsersConfig',
     'crispy_bootstrap4',
     'feed.apps.FeedConfig',

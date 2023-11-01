@@ -1,0 +1,26 @@
+{% extends "feed/base.html" %}
+{% load static %}
+
+{% block content %}
+    {% if chart %}
+        <img src="data:image/png;base64, {{chart|safe}}"
+    {% endif %}
+    
+    <h2>Suggested For You</h2>
+
+    {% for suggest in suggestions %}
+
+    <div class="suggestion">
+        
+        <div>
+        <p>
+            {{ suggest }}
+        </p>
+        
+        <button>Follow</button>
+        </div>
+
+    </div>
+
+    {% endfor %}
+{% endblock content %}

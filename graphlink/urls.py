@@ -20,6 +20,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from users import views as user_views # importing reg form for url
+from graph import views as graph_views
 
 
 urlpatterns = [
@@ -32,6 +33,7 @@ urlpatterns = [
     path('password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),
+    path('graph/', graph_views.plot_network, name='graph'),
 ]
 
 if settings.DEBUG:
