@@ -18,10 +18,10 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)#if user deleted, posts deleted
     image = models.ImageField(upload_to='post_pics', default='default.jpg')#option to add custom image functionality
     likes = models.IntegerField(default=0)
-    meme_template_id = models.CharField(max_length=100, default="bilbo") 
-    top_text = models.CharField(max_length=100, default="Enter top text")
-    bottom_text = models.CharField(max_length=100, default="Enter top text")
-    meme = models.URLField(blank=True)
+    #meme_template_id = models.CharField(max_length=100, default="bilbo") 
+    #top_text = models.CharField(max_length=100, default="Enter top text")
+    #bottom_text = models.CharField(max_length=100, default="Enter top text")
+    #meme = models.URLField(blank=True)
 
 
     def __str__(self):

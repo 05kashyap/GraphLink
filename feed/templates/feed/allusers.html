@@ -1,0 +1,12 @@
+{% extends "feed/base.html" %}
+
+{% block content %}
+<h1>All Users</h1>
+{% for user in users %}
+    <div>
+        
+        <a href="{% url 'user-posts' user.username %} ">{{user.username}}</a>
+    </div>
+{% endfor %}
+
+{% endblock content %}

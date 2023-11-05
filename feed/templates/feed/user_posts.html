@@ -11,6 +11,7 @@
                 <div class="col col-md-9 col-lg-7 col-xl-5">
                   <div class="card" style="border-radius: 15px;">
                     <div class="card-body p-4">
+                      {% if user_posts %}
                         {% with post1=user_posts.0 %}
                       <div class="d-flex text-black">
                         <div class="flex-shrink-0">
@@ -64,6 +65,13 @@
                       </div>
                     </div>
                     {% endwith %}
+                    {% else %}
+                    <div>
+                      User has no posts!<br>
+                      <button class= 'btn btn-primary flex-grow-1' onclick="window.location='{% url 'follow' user.profile.id %}'">Follow</button>
+                      <button class= 'btn btn-primary flex-grow-1' onclick="window.location='{% url 'unfollow' user.profile.id %}'">Unfollow</button>
+                    </div>
+                    {% endif %}
               </div>
             </div>
 

@@ -90,7 +90,8 @@
                 </li>
                 {% if user.is_authenticated %}
                 <img src="{{ user.profile.image.url}}" alt="avatar" class="img-fluid"
-                style="width: 50px; border-radius: 10px;">
+                style="width: 50px; border-radius: 10px;">&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-outline-info mb-4 " href="{% url 'graph' %}">Graph</a>
                 {% endif %}
               </ul>
             </div>
