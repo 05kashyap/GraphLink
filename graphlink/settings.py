@@ -36,9 +36,9 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'graph.apps.GraphConfig',
     'users.apps.UsersConfig',
-    'crispy_bootstrap4',
     'feed.apps.FeedConfig',
     'crispy_forms',
+    'crispy_bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -133,7 +133,7 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'feed-home'
