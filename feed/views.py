@@ -42,19 +42,16 @@ def unfollow_view(request, profile_id):
 
 
 class PostListView(ListView):
-    '''Home page all posts view'''
-    model = Post 
+    model = Post
     template_name = 'feed/home.html'
-    #context_object_name = 'posts'
-    ordering = ['-date_posted'] # minus sign means newest to oldest
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
     paginate_by = 5
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts'] = Post.objects.order_by('-date_posted')
         top_post = Post.objects.annotate(like_count=Count('post_likes')).order_by(F('like_count').desc())[:1].first()
         context['top'] = top_post
-
         return context
 
 
@@ -153,15 +150,15 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     '''Form to create a meme'''
     model = Post 
-    fields = ['title', 'content','meme_template_id','top_text','bottom_text']
+    fields = ['title', 'content']
 
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        template_id = form.cleaned_data['meme_template_id'] 
-        top_text = form.cleaned_data['top_text']
-        bottom_text = form.cleaned_data['bottom_text']
-        meme_url = generate_meme(template_id, top_text, bottom_text)
+        # template_id = form.cleaned_data['meme_template_id'] 
+        # top_text = form.cleaned_data['top_text']
+        # bottom_text = form.cleaned_data['bottom_text']
+        # meme_url = generate_meme(template_id, top_text, bottom_text)
         #m_url = get_meme_url()
         '''
         if form.cleaned_data['image']:
@@ -170,20 +167,20 @@ class PostCreateView(LoginRequiredMixin, CreateView):
             file = fss.save(image.name, image)
             form.instance.image = file '''
         post = form.save(commit=False) 
-        post.meme = meme_url
+        # post.meme = meme_url
         post.save()
         return super().form_valid(form)
     
 #make into class based view for pagination later    
-def meme_templates(request):
-    '''View to return available templates'''
-    memes = get_templates()
-    meme_zip = zip(memes[0],memes[1])
-    paginate_by = 5
-    context = {
-       'memes' : meme_zip
-    }
-    return render(request, 'feed/memes.html', context)#html template
+# def meme_templates(request):
+#     '''View to return available templates'''
+#     memes = get_templates()
+#     meme_zip = zip(memes[0],memes[1])
+#     paginate_by = 5
+#     context = {
+#        'memes' : meme_zip
+#     }
+#     return render(request, 'feed/memes.html', context)#html template
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
     '''Comment creation form'''
@@ -205,14 +202,14 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     '''Meme updation form'''
     model = Post 
-    fields = ['title', 'content','meme_template_id','top_text','bottom_text']
+    fields = ['title', 'content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        template_id = form.cleaned_data['meme_template_id'] 
-        top_text = form.cleaned_data['top_text']
-        bottom_text = form.cleaned_data['bottom_text']
-        meme_url = generate_meme(template_id, top_text, bottom_text)
+        # template_id = form.cleaned_data['meme_template_id'] 
+        # top_text = form.cleaned_data['top_text']
+        # bottom_text = form.cleaned_data['bottom_text']
+        # meme_url = generate_meme(template_id, top_text, bottom_text)
         #m_url = get_meme_url()
         '''
         if form.cleaned_data['image']:
