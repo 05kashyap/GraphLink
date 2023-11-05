@@ -57,12 +57,12 @@ def get_plot():
         for follower in followers:
             Social.add_edge(user, follower, weight= 1)
 
-    pos = nx.spiral_layout(Social) 
+    pos = nx.spring_layout(Social) 
     plt.figure(figsize=(10,5))
     nx.draw(Social, pos, with_labels=True, node_size=200, node_color='skyblue', style='dashed')
     #nx.draw(Social, pos, with_labels=True)
     edge_labels = dict([((u,v,), d['weight']) for u,v,d in Social.edges(data=True)])
-    nx.draw_networkx_edge_labels(Social, pos)
+    #nx.draw_networkx_edge_labels(Social, pos)
     #plt.tight_layout()
     graph = get_graph()
     return graph
