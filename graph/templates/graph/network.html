@@ -2,25 +2,162 @@
 {% load static %}
 
 {% block content %}
+<style>:root {
+    --orange: #fd9940;
+    --darkorange: #dd7d25;
+    --platinum: #e5e5e5;
+    --black: #2b2d42;
+    --white: #fff;
+    --thumb: #edf2f4;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font: 16px / 24px "Rubik", sans-serif;
+    color: var(--black);
+    background: var(--platinum);
+    margin: 50px 0;
+}
+
+.container {
+    max-width: 1400px;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+h2 {
+    font-size: 32px;
+    margin-top: 20px;
+}
+
+.cards {
+    display: grid;
+    grid-auto-columns: 100%;
+    grid-column-gap: 10px;
+    grid-auto-flow: column;
+    padding: 25px 0px;
+    list-style: none;
+    overflow-x: scroll;
+    -ms-scroll-snap-type: x mandatory;
+    scroll-snap-type: x mandatory;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+    scroll-snap-align: start;
+    transition: all 0.2s;
+}
+
+.card:hover {
+    color: var(--white);
+    background: #77aafc;
+}
+
+.card .card-title {
+    font-size: 20px;
+}
+
+.card .card-content {
+    margin: 20px 0;
+    max-width: 85%;
+}
+
+.card .card-link-wrapper {
+    margin-top: auto;
+}
+
+.card .card-link {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    background: #4287f5;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.card:hover .card-link {
+    background: #013280;
+}
+
+.cards::-webkit-scrollbar {
+    height: 12px;
+}
+
+.cards::-webkit-scrollbar-thumb,
+.cards::-webkit-scrollbar-track {
+    border-radius: 92px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+    background: var(--darkorange);
+}
+
+.cards::-webkit-scrollbar-track {
+    background: var(--thumb);
+}
+
+@media (min-width: 500px) {
+    .cards {
+        grid-auto-columns: calc(50% - 10px);
+        grid-column-gap: 20px;
+    }
+}
+
+@media (min-width: 700px) {
+    .cards {
+        grid-auto-columns: calc(calc(100% / 3) - 20px);
+        grid-column-gap: 30px;
+    }
+}
+
+@media (min-width: 1100px) {
+    .cards {
+        grid-auto-columns: calc(25% - 30px);
+        grid-column-gap: 40px;
+    }
+}</style>
     {% if chart %}
-        <img src="data:image/png;base64, {{chart|safe}}"
+        <img class="img-fluid" src="data:image/png;base64, {{chart|safe}}">
     {% endif %}
     
-    <h2>Suggested For You</h2>
 
-    {% for suggest in suggestions %}
 
-    <div class="suggestion">
-        
-        <div>
-        <p>
-            {{ suggest }}
-        </p>
-        
-        <button>Follow</button>
-        </div>
+   
+    <script type='text/javascript' src=''></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+    <script type='text/javascript' src=''></script>
+</head>
+<body oncontextmenu='return false' class='snippet-body'>
+<div class="container">
+    <h2 class="btn btn-primary">Suggestions</h2>
+        <ul class="cards">
+            
+            {% for suggest in suggestions %}
+            <li class="card">
+                <div>
+                    <img src="{{ suggest.profile.image.url}}" alt="avatar" class="img-fluid"
+                style="width: 50px; border-radius: 10px;">
+                    <h3 class="card-title"> {{ suggest.username }}</h3>
+                <div class="card-link-wrapper">
+                    <a href="{% url 'user-posts' suggest.username %}" class="card-link">Follow</a>
+                </div>
+            </li>
+            {% endfor %}
 
+           
+        </ul>
     </div>
-
-    {% endfor %}
+                                <script type='text/javascript'></script>
+                                </body>
 {% endblock content %}

@@ -3,7 +3,7 @@
 {% block content %}
 
     
-    <div class="content-section" style="background-color:Linen ;">
+    <div class="content-section" style="background-color:#cfe1ff ;">
         
             <h1 class = "mb-10">Your posts</h1>
         <div class="article-metadata">
@@ -26,7 +26,7 @@
                     <div class="flex-grow-1 ms-3">
                       <h5 class="mb-1">{{ view.kwargs.username }}</h5>
                       <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
-                        style="background-color: #ffe7ca;">
+                        style="background-color: #bcc2cc;">
                         <div>
                           <p class="small text-muted mb-1">Posts</p>
                           <p class="mb-0">{{ user_posts.count }}</p>
@@ -36,7 +36,7 @@
                           <p class="mb-0">{{ post1.author.profile.get_followers.count }}</p>
                         </div>
                         <div>
-                          <p class="small text-muted mb-1">DankScore</p>
+                          <p class="small text-muted mb-1">Likes</p>
                           {% if user_posts.0 %}
                           <p class="mb-0">{{ total_likes }}</p>
                           {% endif %}
@@ -86,7 +86,7 @@
         
     </div>
         {% for post in user_posts %}
-            <article class="media content-section" style="background-color:Linen ;">
+            <article class="media content-section" style="background-color:#cfe1ff ;">
                 <img class="rounded article-img" src="{{ post.author.profile.image.url }}">
                 <div class="media-body">
                 <div class="article-metadata">

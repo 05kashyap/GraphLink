@@ -9,11 +9,15 @@
     <div class="card mb-3">
         {% if top %}
         <!-- <img class="card-img-top" src="{{ top.meme }}" alt="Card image cap"  width="962" height="300"> -->
-        <div class="card-body" style="background-color:Linen ;">
+        <div class="card-body" style="background-color:#cfe1ff ;">
         <h5 class="card-title">Featured Post</h5>
         <div class="article-metadata">
         </div>
+            {% if user.is_authenticated %}
+            <h2>{{ top.title }}</h2>
+            {% else %}
             <h2><span title=" Log in to view likes "><a class="article-title" href="{% url 'login' %}">{{ top.title }}</a></span></h2>
+            {% endif%}
             <p class="article-content">{{ top.content }}</p>
         <p class="article-title" >        <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
             {{ top.post_likes.count }} Likes</a></p>
@@ -23,9 +27,9 @@
         <div class="article-metadata">
         </div>
         {% if user.is_authenticated %}
-        <a href="{% url 'post-detail' top.id %}" class="btn btn-primary">View meme</a>
+        <a href="{% url 'post-detail' top.id %}" class="btn btn-primary">View post</a>
         {% else  %}
-        <a href="{% url 'login' %}" class="btn btn-primary">Login to view meme</a>
+        <a href="{% url 'login' %}" class="btn btn-primary">Login to view post</a>
         {% endif %}
         <p class="card-text"><small class="text-muted">Posted on {{ top.date_posted|date:"F d, Y" }}</small></p>
         {% else %}
@@ -48,7 +52,7 @@
           
 
         {% for post in posts %}
-            <article class="media content-section" style="background-color:Linen ;">
+            <article class="media content-section" style="background-color:#cfe1ff ;">
                 <img class="rounded article-img" src="{{ post.author.profile.image.url }}">
                 <div class="media-body">
                 <div class="article-metadata">

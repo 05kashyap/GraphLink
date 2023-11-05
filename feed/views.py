@@ -1,5 +1,4 @@
 from typing import Any
-from .utils import generate_meme, get_templates
 from users.models import Profile
 from django.db.models import Count, F
 from .models import Like, Post, Comment
@@ -30,7 +29,7 @@ def follow_view(request, profile_id):
     user_profile = request.user.profile
     target_profile = Profile.objects.get(pk=profile_id)
     Profile.objects.follow(user_profile, target_profile)
-    return redirect('profile')
+    return redirect('graph')
 
 def unfollow_view(request, profile_id):
     '''View that removes followers'''
@@ -38,7 +37,7 @@ def unfollow_view(request, profile_id):
     target_profile = Profile.objects.get(pk=profile_id)
     Profile.objects.unfollow(user_profile, target_profile)
 
-    return redirect('profile')
+    return redirect('graph')
 
 
 class PostListView(ListView):
@@ -218,7 +217,6 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             file = fss.save(image.name, image)
             form.instance.image = file '''
         post = form.save(commit=False) 
-        post.meme = meme_url
         post.save()
         return super().form_valid(form)
     

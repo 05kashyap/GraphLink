@@ -3,7 +3,7 @@
 {% block content %}
 
     
-    <div class="content-section" style="background-color:Linen ;">
+    <div class="content-section" style="background-color:#cfe1ff ;">
 
        
            
@@ -22,7 +22,7 @@
                         <div class="flex-grow-1 ms-3">
                           <h5 class="mb-1">{{ view.kwargs.username }}</h5>
                           <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
-                            style="background-color: #ffe7ca;">
+                            style="background-color: #bcc2cc;">
                             <div>
                               <p class="small text-muted mb-1">Posts</p>
                               <p class="mb-0">{{ page_obj.paginator.count }}</p>
@@ -81,7 +81,7 @@
        
     </div>
         {% for post in user_posts %}
-            <article class="media content-section" style="background-color:Linen ;">
+            <article class="media content-section" style="background-color:#cfe1ff ;">
                 <img class="rounded article-img" src="{{ post.author.profile.image.url }}">
                 <div class="media-body">
                 <div class="article-metadata">

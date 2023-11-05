@@ -4,6 +4,8 @@ from io import BytesIO
 import networkx as nx
 from users.models import Profile
 from collections import OrderedDict
+from django.contrib.auth.models import User
+
 
 def get_top_n(dict_, n):
   return OrderedDict(sorted(dict_.items(), key=lambda x: x[1], reverse=True)[:n])
@@ -25,7 +27,7 @@ def get_plot():
     }
     profiles = Profile.objects.all()
     
-    Social = nx.Graph()
+    Social = nx.DiGraph()
     
     # Get list of usernames
     usernames = []
@@ -55,10 +57,11 @@ def get_plot():
     #print(profiles)
     for user, followers in social_g.items():
         for follower in followers:
-            Social.add_edge(user, follower)
+            Social.add_edge(follower, user)
 
-    pos = nx.spring_layout(Social) 
-    plt.figure(figsize=(10,5))
+    pos = nx.spring_layout(Social, k=0.001, iterations=2) 
+    plt.figure(figsize=(10,6))
+    
     nx.draw(Social, pos, with_labels=True, node_size=200, node_color='skyblue', style='dashed')
     #nx.draw(Social, pos, with_labels=True)
     #edge_labels = dict([((u,v,), d['weight']) for u,v,d in Social.edges(data=True)])
@@ -143,14 +146,16 @@ def generate_user_follow_suggestions(user) -> list:
         for useri, _ in sorted_users:
             if useri != user and G.has_edge(user, useri) == False and useri not in suggestions:
                 suggestions.append(useri)
+        suggestions = [User.objects.get(username=username) for username in suggestions]
         return suggestions[:5]
     # User with few followers
     else:
         print('Case 2 triggered')
         # try to recommend friends of friends 
         suggestions.extend(FoFs(user, G))
+        suggestions = [User.objects.get(username=username) for username in suggestions]
         return suggestions[:5]
- 
+        
     
 # def mutual_friends(user : str, Graph : nx.Graph) -> set:
 

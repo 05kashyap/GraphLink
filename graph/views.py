@@ -10,7 +10,6 @@ from users.models import Profile
 
 
 
-
 def plot_network(request):
 
     chart = get_plot() 
