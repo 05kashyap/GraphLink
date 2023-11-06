@@ -128,36 +128,35 @@ h2 {
     }
 }</style>
     {% if chart %}
-        <img class="img-fluid" src="data:image/png;base64, {{chart|safe}}">
+        <img class="img-fluid" src="data:image/png;base64, {{chart|safe}}" style="border-radius: 5px;">
     {% endif %}
     
-
-
    
+    </head>
+    <body oncontextmenu='return false' class='snippet-body'>
+    <div class="container">
+        <h2 class="btn btn-primary">Suggestions</h2>
+            <ul class="cards">
+                
+                {% for suggest in suggestions %}
+                <li class="card">
+                    <div>
+                        <img src="{{ suggest.profile.image.url}}" alt="avatar" class="img-fluid"
+                    style="width: 50px; border-radius: 10px;">
+                        <h3 class="card-title"> {{ suggest.username }}</h3>
+                    <div class="card-link-wrapper">
+                        <a href="{% url 'user-posts' suggest.username %}" class="card-link">Follow</a>
+                    </div>
+                </li>
+                {% endfor %}
+
+           
+             </ul>
+    </div>
+    <script type='text/javascript'></script>
+                                
     <script type='text/javascript' src=''></script>
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
     <script type='text/javascript' src=''></script>
-</head>
-<body oncontextmenu='return false' class='snippet-body'>
-<div class="container">
-    <h2 class="btn btn-primary">Suggestions</h2>
-        <ul class="cards">
-            
-            {% for suggest in suggestions %}
-            <li class="card">
-                <div>
-                    <img src="{{ suggest.profile.image.url}}" alt="avatar" class="img-fluid"
-                style="width: 50px; border-radius: 10px;">
-                    <h3 class="card-title"> {{ suggest.username }}</h3>
-                <div class="card-link-wrapper">
-                    <a href="{% url 'user-posts' suggest.username %}" class="card-link">Follow</a>
-                </div>
-            </li>
-            {% endfor %}
-
-           
-        </ul>
-    </div>
-                                <script type='text/javascript'></script>
                                 </body>
 {% endblock content %}
