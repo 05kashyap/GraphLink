@@ -90,6 +90,7 @@ class UserPostListView(ListView):
                     context['follow'] = True
         # Calculate total likes for the user's posts
         total_likes = Like.objects.total_likes_for_user_posts(user)
+        context['curr_user'] = user#the user whos profile is being viewed
         context['user_posts'] = Post.objects.filter(author=user).order_by('-date_posted')
         context['total_likes'] = total_likes
         return context
