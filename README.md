@@ -1,2 +1,2 @@
 # GraphLink
-Social Network with recommendor system
+Social Network with recommender system
