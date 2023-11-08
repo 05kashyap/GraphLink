@@ -12,6 +12,6 @@ from users.models import Profile
 
 def plot_network(request):
 
-    chart = get_plot() 
-    recs = generate_user_follow_suggestions(request.user.profile)
-    return render(request, 'graph/network.html', {'chart':chart, 'suggestions': recs})
+    chart, social = get_plot() 
+    recs, followbacks = generate_user_follow_suggestions(request.user.profile)
+    return render(request, 'graph/network.html', {'chart':chart, 'suggestions': recs, 'followback':followbacks, 'social':social})

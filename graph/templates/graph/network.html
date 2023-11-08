@@ -127,7 +127,8 @@ h2 {
         grid-column-gap: 40px;
     }
 }</style>
-    {% if chart %}
+    {% if chart and social %}
+    <hr>
         <img class="img-fluid" src="data:image/png;base64, {{chart|safe}}" style="border-radius: 5px;">
     {% endif %}
     
@@ -135,6 +136,26 @@ h2 {
     </head>
     <body oncontextmenu='return false' class='snippet-body'>
     <div class="container">
+        {% if followback %}
+        <h2 class="btn btn-primary">Follow Back</h2>
+            <ul class="cards">
+                
+                {% for follow in followback %}
+                <li class="card">
+                    <div>
+                        <p>{{follow}}</p>
+                        <img src="{{ follow.profile.image.url}}" alt="avatar" class="img-fluid"
+                    style="width: 50px; border-radius: 10px;">
+                        <h3 class="card-title"> {{ follow.username }}</h3>
+                    <div class="card-link-wrapper">
+                        
+                    </div>
+                </li>
+                {% endfor %}
+
+           
+             </ul>
+        {%endif%}
         <h2 class="btn btn-primary">Suggestions</h2>
             <ul class="cards">
                 
