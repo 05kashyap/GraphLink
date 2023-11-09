@@ -21,54 +21,41 @@ def get_graph():
     return graph
 
 def get_plot():
-
     plt.switch_backend('AGG')
     social_g = {
     }
     profiles = Profile.objects.all()
-    
     Social = nx.DiGraph()
-    
     # Get list of usernames
     usernames = []
     for profile in profiles:
         usernames.append(profile.user.username)
-
-    # Print usernames  
-    #print(usernames)
-
     # Create graph from usernames 
     Social.add_nodes_from(usernames)
-    
-
     # Verify node count
     print(len(Social.nodes())) 
-
     # Add edges
     for profile in profiles:
         username = profile.user.username
         followers = profile.followers.all()
         social_g[username] = list(followers)
-
-    
     for key, value in social_g.items():
-        social_g[key] = [str(v).removeprefix("<User: ") for v in value]
-    #print(social_g)
-    #print(profiles)
-    
+        social_g[key] = [str(v).removeprefix("<User: ") for v in value]   
     for user, followers in social_g.items():
         for follower in followers:
             Social.add_edge(follower, user)
-
-    pos = nx.spring_layout(Social, k=1, iterations=2, scale=5) 
-    plt.figure(figsize=(10,6))
-    
+    # pos = nx.spring_layout(Social, k=1, iterations=2, scale=5) 
+    plt.figure(figsize=(10,6))  
     nodesize = [v*3000 for v in nx.degree_centrality(Social).values()]
-    
-    nx.draw(Social, pos, with_labels=True, node_color='skyblue', style='dashed', node_size=nodesize)
+    options = {'pos':nx.layout.kamada_kawai_layout(Social),
+               'with_labels':True,
+               'node_color':'skyblue',
+               'style':'dotted',
+               'node_size':nodesize,
+               }
+    nx.draw(Social, **options)
     #nx.draw(Social, pos, with_labels=True)
     #edge_labels = dict([((u,v,), d['weight']) for u,v,d in Social.edges(data=True)])
-    
     #plt.tight_layout()
     graph = get_graph()
     return graph,[social_g.items()]

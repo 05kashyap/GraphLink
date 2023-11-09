@@ -74,8 +74,9 @@
                 
                 {% endwith %}
                 {% else %}
-                <button class='btn btn-primary flex-grow-1' onclick="window.location='{% url 'post-create'  %}'">Create your first meme!</button>
+                <button class='btn btn-primary flex-grow-1' onclick="window.location='{% url 'post-create'  %}'">Create your first Post!</button>
                 {% endif %}
+                
           </div>
 
         </div>
@@ -108,6 +109,7 @@
                 {% endif %}
             </article>
         {% endfor %}
+        <br>
         {% if is_paginated %}
             {% if page_obj.has_previous %}
                 <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
