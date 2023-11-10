@@ -49,25 +49,10 @@ def get_plot():
 
     for key, value in social_g.items():
         social_g[key] = [str(v).removeprefix("<User: ") for v in value]
-<<<<<<< Updated upstream
-    #print(social_g)
-    #print(profiles)
-    
-=======
-
->>>>>>> Stashed changes
     for user, followers in social_g.items():
         for follower in followers:
             Social.add_edge(follower, user)
 
-<<<<<<< Updated upstream
-    pos = nx.spring_layout(Social, k=1, iterations=2, scale=5) 
-    plt.figure(figsize=(10,6))
-    
-    nodesize = [v*3000 for v in nx.degree_centrality(Social).values()]
-    
-    nx.draw(Social, pos, with_labels=True, node_color='skyblue', style='dashed', node_size=nodesize)
-=======
     communities = nx.community.girvan_newman(Social)
     k = len(Social.nodes())//4 +1
     for i in range(k):
@@ -83,12 +68,11 @@ def get_plot():
     colors = [node_colors[node] for node in Social.nodes()]
     d = dict(Social.degree)# used for size increase based on degree
 
-    pos = nx.spring_layout(Social, k=0.001, iterations=2)
+    pos = nx.spring_layout(Social, k=0.2, iterations=2)
     #pos = nx.kamada_kawai_layout(Social)
     plt.figure(figsize=(10,6))
 
     nx.draw(Social, pos, node_color=colors, with_labels=True, node_size=[v * 100 for v in d.values()], style='dashed',cmap=plt.cm.Pastel1)
->>>>>>> Stashed changes
     #nx.draw(Social, pos, with_labels=True)
     #edge_labels = dict([((u,v,), d['weight']) for u,v,d in Social.edges(data=True)])
 
