@@ -26,23 +26,19 @@ def get_plot():
     social_g = {
     }
     profiles = Profile.objects.all()
-    
+
     Social = nx.DiGraph()
-    
+
     # Get list of usernames
     usernames = []
     for profile in profiles:
         usernames.append(profile.user.username)
 
-    # Print usernames  
+    # Print usernames
     #print(usernames)
 
-    # Create graph from usernames 
+    # Create graph from usernames
     Social.add_nodes_from(usernames)
-    
-
-    # Verify node count
-    print(len(Social.nodes())) 
 
     # Add edges
     for profile in profiles:
@@ -50,25 +46,52 @@ def get_plot():
         followers = profile.followers.all()
         social_g[username] = list(followers)
 
-    
+
     for key, value in social_g.items():
         social_g[key] = [str(v).removeprefix("<User: ") for v in value]
+<<<<<<< Updated upstream
     #print(social_g)
     #print(profiles)
     
+=======
+
+>>>>>>> Stashed changes
     for user, followers in social_g.items():
         for follower in followers:
             Social.add_edge(follower, user)
 
+<<<<<<< Updated upstream
     pos = nx.spring_layout(Social, k=1, iterations=2, scale=5) 
     plt.figure(figsize=(10,6))
     
     nodesize = [v*3000 for v in nx.degree_centrality(Social).values()]
     
     nx.draw(Social, pos, with_labels=True, node_color='skyblue', style='dashed', node_size=nodesize)
+=======
+    communities = nx.community.girvan_newman(Social)
+    k = len(Social.nodes())//4 +1
+    for i in range(k):
+        community = next(communities)
+
+    # Assign a color to each community for node coloring
+    node_colors = {}
+    for i, com in enumerate(community):
+        for node in com:
+            node_colors[node] = i
+
+    # Convert the node_colors dictionary to a list for coloring nodes
+    colors = [node_colors[node] for node in Social.nodes()]
+    d = dict(Social.degree)# used for size increase based on degree
+
+    pos = nx.spring_layout(Social, k=0.001, iterations=2)
+    #pos = nx.kamada_kawai_layout(Social)
+    plt.figure(figsize=(10,6))
+
+    nx.draw(Social, pos, node_color=colors, with_labels=True, node_size=[v * 100 for v in d.values()], style='dashed',cmap=plt.cm.Pastel1)
+>>>>>>> Stashed changes
     #nx.draw(Social, pos, with_labels=True)
     #edge_labels = dict([((u,v,), d['weight']) for u,v,d in Social.edges(data=True)])
-    
+
     #plt.tight_layout()
     graph = get_graph()
     return graph,[social_g.items()]
