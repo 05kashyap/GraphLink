@@ -44,19 +44,34 @@ def get_plot():
     for user, followers in social_g.items():
         for follower in followers:
             Social.add_edge(follower, user)
+    
+    communities = nx.community.girvan_newman(Social)
+    k = len(Social.nodes())//4 + 1
+    for i in range(6):
+        community = next(communities)
+        
+    node_colors = {}
+    for i, com in enumerate(community):
+        for node in com:
+            node_colors[node] = i
+    
+    colors = [node_colors[node] for node in Social.nodes()]
+    
+    # take args of number of communities to form to not disintegrate 
     # pos = nx.spring_layout(Social, k=1, iterations=2, scale=5) 
     plt.figure(figsize=(10,6))  
     nodesize = [v*3000 for v in nx.degree_centrality(Social).values()]
-    options = {'pos':nx.layout.kamada_kawai_layout(Social),
+    options = {'pos':nx.layout.spring_layout(Social, k = 1, iterations=20, scale=5),
                'with_labels':True,
                'node_color':'skyblue',
                'style':'dotted',
                'node_size':nodesize,
+               'node_color':colors,
+               'cmap':plt.cm.Pastel1,
                }
     nx.draw(Social, **options)
     #nx.draw(Social, pos, with_labels=True)
     #edge_labels = dict([((u,v,), d['weight']) for u,v,d in Social.edges(data=True)])
-    #plt.tight_layout()
     graph = get_graph()
     return graph,[social_g.items()]
 
@@ -158,6 +173,10 @@ def generate_user_follow_suggestions(user) -> list:
         print('Case 2 triggered')
         # try to recommend friends of friends 
         suggestions.extend(FoFs(user, G.to_undirected()))
+        for useri, _ in sorted_users:
+            if useri != user and G.has_edge(user, useri) == False and useri not in suggestions:
+                suggestions.append(useri)
+                
         suggestions = [x for x in suggestions if x not in follow]
         suggestions = [User.objects.get(username=username) for username in suggestions]
         return suggestions, follow
