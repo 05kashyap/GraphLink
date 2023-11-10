@@ -11,9 +11,7 @@
                     <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
                 </div>
                 <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-                {% if post.meme %}
-                <img src="{{ post.meme }}" width="300" height="330"> 
-                {% endif %}
+                
                 </div>
                 {% if user.is_authenticated %}
                 <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
