@@ -14,4 +14,4 @@ def plot_network(request):
 
     chart = get_plot() 
     recs = generate_user_follow_suggestions(request.user.profile)
-    return render(request, 'graph/network.html', {'chart':chart, 'suggestions': recs})
+    return render(request, 'graph/network.html', {'chart':chart, 'suggestions': recs, 'user' : request.user})

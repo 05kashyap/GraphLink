@@ -135,7 +135,7 @@ h2 {
     </head>
     <body oncontextmenu='return false' class='snippet-body'>
     <div class="container">
-        <h2 class="btn btn-primary">Suggestions</h2>
+        <h2 class="btn btn-primary btn-lg">Suggestions</h2>
             <ul class="cards">
                 
                 {% for suggest in suggestions %}
@@ -149,7 +149,19 @@ h2 {
                     </div>
                 </li>
                 {% endfor %}
-
+                {% for follower in user.profile.get_followers %}
+                {% if follower not in user.profile.get_following %}
+                <li class="card">
+                    <div>
+                        <img src="{{ follower.profile.image.url}}" alt="avatar" class="img-fluid"
+                    style="width: 50px; border-radius: 10px;">
+                        <h3 class="card-title"> {{ follower.username }}</h3>
+                    <div class="card-link-wrapper">
+                        <a href="{% url 'user-posts' follower.username %}" class="card-link">Follow Back</a>
+                    </div>
+                </li>
+                {% endif %}
+            {% endfor %}
            
              </ul>
     </div>
