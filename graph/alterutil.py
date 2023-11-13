@@ -141,7 +141,6 @@ def genrate_social_network():
             Social.add_edge(follower, user)
     return Social, social_g
 
-
 def generate_suggestions(user): 
     """
     there will 3 cases to solve 
@@ -163,14 +162,15 @@ def generate_suggestions(user):
     if Un_G.degree()[user] == 0.0 : # ensure node has no connections
         print("Case 1 triggred (user is new to network)")
         suggestions.extend(eigenvector_followerlist)
-        suggestions.extend(articulation_list)
+        suggestions.extend(community_leader(user, G, Un_G))
+        # suggestions.extend(articulation_list)
         suggestions = list(set(suggestions))
         suggestions = [User.objects.get(username=username) for username in suggestions]
-        return suggestions
+        return suggestions, list()
     elif user in nx.articulation_points(Un_G):
         print('Case 2 triggred (user is an articulation point)')
         # suggestions.extend(eigenvector_followerlist)
-        suggestions.extend(community_leader(G, Un_G))
+        suggestions.extend(community_leader(user, G, Un_G))
         if user in suggestions: suggestions.remove(user)
         suggestions.extend(articulation_list)
         suggestions = list(set(suggestions))

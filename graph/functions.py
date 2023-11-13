@@ -83,7 +83,7 @@ def eigenvector_followers(user: str, graph: nx.DiGraph):
     eigenvector_dict = nx.eigenvector_centrality(graph, max_iter=1000,)
     # sort the dict usings its value as reference
     
-    followerslist = list(node for node, _ in eigenvector_dict.items() if _ > 0.1)
+    followerslist = list(node for node, _ in eigenvector_dict.items() if _ > 0.2)
     if user in followerslist: followerslist.remove(user)
     
     # check if node has no connections
@@ -95,7 +95,7 @@ def eigenvector_followers(user: str, graph: nx.DiGraph):
             if i in followerslist: followerslist.remove(i)
         return followerslist
 
-def community_leader(G, UG):
+def community_leader(user : str, G: nx.DiGraph , UG: nx.Graph):
     communities = sorted(nxcom.greedy_modularity_communities(G), key=len, reverse=True)
     print(list(communities[0]))
     #cmli = list(communities[0])
@@ -114,4 +114,12 @@ def community_leader(G, UG):
         com_head = k[v.index(max(v))]
         print(f"community head: {com_head}")
         heads.append(com_head)
-    return heads
+    # if user undergo cold start
+    if G.degree()[user] == 0.0 :
+        if user in heads: heads.remove(user)
+        return heads
+    else:
+        friends = UG.neighbors(user)
+        for i in friends:
+            if i in heads : heads.remove(i)
+        return heads
