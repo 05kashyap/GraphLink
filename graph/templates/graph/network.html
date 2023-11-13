@@ -143,12 +143,12 @@ h2 {
                 {% for follow in followback %}
                 <li class="card">
                     <div>
-                        <p>{{follow}}</p>
+                        <!-- <p>{{follow}}</p> -->
                         <img src="{{ follow.profile.image.url}}" alt="avatar" class="img-fluid"
                     style="width: 50px; border-radius: 10px;">
                         <h3 class="card-title"> {{ follow.username }}</h3>
                     <div class="card-link-wrapper">
-                        
+                        <a href="{% url 'user-posts' follow.username %}" class="card-link">FollowBack</a>
                     </div>
                 </li>
                 {% endfor %}
@@ -156,6 +156,7 @@ h2 {
            
              </ul>
         {%endif%}
+        {% if suggestions %}
         <h2 class="btn btn-primary">Suggestions</h2>
             <ul class="cards">
                 
@@ -170,9 +171,8 @@ h2 {
                     </div>
                 </li>
                 {% endfor %}
-
-           
              </ul>
+             {%endif%}
     </div>
     <script type='text/javascript'></script>
                                 
