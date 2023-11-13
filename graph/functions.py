@@ -1,7 +1,6 @@
 import networkx as nx
-import networkx.algorithms.community as nxcom
-
 import numpy as np
+import networkx.algorithms.community as nxcom
 
 def FoFs(user : str, Graph : nx.DiGraph) -> set:
 
@@ -29,29 +28,9 @@ def FoFs(user : str, Graph : nx.DiGraph) -> set:
         totalconn.remove(user) # remove the user
     return totalconn
 
-def community_leader(G, UG):
-    communities = sorted(nxcom.greedy_modularity_communities(G), key=len, reverse=True)
-    print(list(communities[0]))
-    #cmli = list(communities[0])
-    print(G.degree()[list(communities[0])[0]])
-    #Keymax = max(cmli, key= lambda x: cmli[x])
-    #print(Keymax)
-    heads = []
-    deg = dict(UG.degree())
-    #Get most influential node for each 
-    for community in communities:
-        community = list(community)
-        k = [x for x in deg if x in community]
-        #print(k)
-        v = [deg[x] for x in k]
-        #print(v)
-        com_head = k[v.index(max(v))]
-        print(f"community head: {com_head}")
-        heads.append(com_head)
-    return heads
-
-
 def followback(user: str, graph : nx.DiGraph ):
+    """ this returns the list of follower which user doesn't follow back 
+        if user is new to network returns null """
     # create a digraph 
     # edgelist = list(graph.edges())
     # print(edgelist)
@@ -90,6 +69,49 @@ def articulation_points(user: str, graph: nx.Graph):
     # check if user is an articualtion node 
     if user in articulations:
         articulations.remove(user)
-    return articulations
+    if graph.degree()[user] == 0.0:
+        return articulations
+    else:
+        friends = list(graph.neighbors(user))
+        for i in friends:
+            if i in articulations : articulations.remove(i)
+        return articulations
     
+def eigenvector_followers(user: str, graph: nx.DiGraph):
+    """ this vector returns the list of users and their eigen vector """
     
+    eigenvector_dict = nx.eigenvector_centrality(graph, max_iter=1000,)
+    # sort the dict usings its value as reference
+    
+    followerslist = list(node for node, _ in eigenvector_dict.items() if _ > 0.2)
+    if user in followerslist: followerslist.remove(user)
+    
+    # check if node has no connections
+    if graph.to_undirected().degree()[user] == 0.0:
+        return followerslist
+    else:
+        friends = list(graph.to_undirected().neighbors(user))
+        for i in friends: 
+            if i in followerslist: followerslist.remove(i)
+        return followerslist
+
+def community_leader(G, UG):
+    communities = sorted(nxcom.greedy_modularity_communities(G), key=len, reverse=True)
+    print(list(communities[0]))
+    #cmli = list(communities[0])
+    print(G.degree()[list(communities[0])[0]])
+    #Keymax = max(cmli, key= lambda x: cmli[x])
+    #print(Keymax)
+    heads = []
+    deg = dict(UG.degree())
+    #Get most influential node for each 
+    for community in communities:
+        community = list(community)
+        k = [x for x in deg if x in community]
+        #print(k)
+        v = [deg[x] for x in k]
+        #print(v)
+        com_head = k[v.index(max(v))]
+        print(f"community head: {com_head}")
+        heads.append(com_head)
+    return heads

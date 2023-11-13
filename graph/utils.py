@@ -1,3 +1,151 @@
+# import matplotlib.pyplot as plt
+# import base64
+# from io import BytesIO
+# import networkx as nx
+# from users.models import Profile
+# from collections import OrderedDict
+# from django.contrib.auth.models import User
+# from .functions import FoFs, followback, adamic_recommendations
+
+
+# def get_top_n(dict_, n):
+#   return OrderedDict(sorted(dict_.items(), key=lambda x: x[1], reverse=True)[:n])
+
+# def get_graph():
+#     buffer = BytesIO()
+#     plt.savefig(buffer, format='png')
+#     buffer.seek(0)
+#     image_png = buffer.getvalue()
+#     graph = base64.b64encode(image_png)
+#     graph = graph.decode('utf-8')
+#     buffer.close()
+#     return graph
+
+# def get_plot():
+#     plt.switch_backend('AGG')
+#     social_g = {
+#     }
+#     profiles = Profile.objects.all()
+#     Social = nx.DiGraph()
+#     # Get list of usernames
+#     usernames = []
+#     for profile in profiles:
+#         usernames.append(profile.user.username)
+#     # Create graph from usernames 
+#     Social.add_nodes_from(usernames)
+#     # Verify node count
+#     print(len(Social.nodes())) 
+#     # Add edges
+#     for profile in profiles:
+#         username = profile.user.username
+#         followers = profile.followers.all()
+#         social_g[username] = list(followers)
+#     for key, value in social_g.items():
+#         social_g[key] = [str(v).removeprefix("<User: ") for v in value]   
+#     for user, followers in social_g.items():
+#         for follower in followers:
+#             Social.add_edge(follower, user)
+    
+#     communities = nx.community.girvan_newman(Social)
+#     k = len(Social.nodes())//4 + 1
+#     for i in range(6):
+#         community = next(communities)
+        
+#     node_colors = {}
+#     for i, com in enumerate(community):
+#         for node in com:
+#             node_colors[node] = i
+    
+#     colors = [node_colors[node] for node in Social.nodes()]
+    
+#     # take args of number of communities to form to not disintegrate 
+#     # pos = nx.spring_layout(Social, k=1, iterations=2, scale=5) 
+#     plt.figure(figsize=(10,6))  
+#     nodesize = [v*3000 for v in nx.degree_centrality(Social).values()]
+#     options = {'pos':nx.layout.spring_layout(Social, k = 1, iterations=20, scale=5),
+#                'with_labels':True,
+#                'node_color':'skyblue',
+#                'style':'dotted',
+#                'node_size':nodesize,
+#                'node_color':colors,
+#                'cmap':plt.cm.Pastel1,
+#                }
+#     nx.draw(Social, **options)
+#     #nx.draw(Social, pos, with_labels=True)
+#     #edge_labels = dict([((u,v,), d['weight']) for u,v,d in Social.edges(data=True)])
+#     graph = get_graph()
+#     return graph,[social_g.items()]
+
+# def generate_graph(user):
+#     logged_user = user.user.username
+#     social_g = {}
+#     profiles = Profile.objects.all()
+    
+#     Social = nx.DiGraph()
+    
+#     # Get list of usernames
+#     usernames = []
+#     for profile in profiles:
+#         usernames.append(profile.user.username)
+
+#     # Create graph from usernames 
+#     Social.add_nodes_from(usernames)
+
+#     # Add edges
+#     for profile in profiles:
+#         username = profile.user.username
+#         followers = profile.followers.all()
+#         social_g[username] = list(followers)
+    
+#     for key, value in social_g.items():
+#         social_g[key] = [str(v).removeprefix("<User: ") for v in value]
+    
+#     for user, followers in social_g.items():
+#         for follower in followers:
+#             Social.add_edge(follower, user)
+
+#     #print(Social.edges)
+#     return [logged_user, Social]
+
+# def generate_user_follow_suggestions(user) -> list:
+#     user, G = generate_graph(user)
+#     # find the degree centrality of user to check if the user is new or not
+#     degree = nx.degree_centrality(G)
+#     # dict of eigenvector_centrality
+#     eigenvector_centrality = nx.eigenvector_centrality(G, max_iter=1000)
+#     # sort the user list based on their eigenvector values
+#     sorted_users = sorted(eigenvector_centrality.items(), key= lambda a:a[1], reverse=True)
+    
+#     # create a suggestion list
+#     suggestions = []
+#     follow = []
+#     follow.extend(followback(user, G))
+#     recommendations = adamic_recommendations(user, G.to_undirected())
+#     # print(recommendations)
+    
+#     user_degree = degree[user]
+#     if(user_degree == 0.0):
+#         print("Case 1 triggered")
+#         # print(nx.articulation_points(G))
+#         suggestions.extend(list(nx.articulation_points(G)))
+#         # suggest some users with high influence
+#         for useri, _ in sorted_users:
+#             if useri != user and G.has_edge(user, useri) == False and useri not in suggestions:
+#                 suggestions.append(useri)
+#         suggestions = [User.objects.get(username=username) for username in suggestions]
+#         return suggestions
+#     # User with few followers
+#     else:
+#         print('Case 2 triggered')
+#         # try to recommend friends of friends 
+#         suggestions.extend(FoFs(user, G.to_undirected()))
+#         for useri, _ in sorted_users:
+#             if useri != user and G.has_edge(user, useri) == False and useri not in suggestions:
+#                 suggestions.append(useri)
+                
+#         suggestions = [x for x in suggestions if x not in follow]
+#         suggestions = [User.objects.get(username=username) for username in suggestions]
+#         return suggestions, follow
 import matplotlib.pyplot as plt
 import base64
 from io import BytesIO

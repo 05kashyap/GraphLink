@@ -6,7 +6,7 @@ import networkx.algorithms.community as nxcom
 from users.models import Profile
 from collections import OrderedDict
 from django.contrib.auth.models import User
-from .functions import FoFs, followback, adamic_recommendations, articulation_points as artipoint, community_leader
+from .functions import FoFs, followback, adamic_recommendations, articulation_points as artipoint, eigenvector_followers, community_leader
 
 def set_node_community(G, communities):
         '''Add community to node attributes'''
@@ -141,7 +141,8 @@ def genrate_social_network():
             Social.add_edge(follower, user)
     return Social, social_g
 
-def generate_user_follow_suggestions(user):
+
+def generate_suggestions(user): 
     """
     there will 3 cases to solve 
     1. cold start 
@@ -149,58 +150,108 @@ def generate_user_follow_suggestions(user):
     3. user with small network
     """
     user, G = generate_user_graph(user)
-    UG = G.to_undirected()
-    # print(user,"\n")
+    Un_G = nx.Graph(G)
+    # UG = G.to_undirected()
+    eigenvector_followerlist = eigenvector_followers(user, G)
+    articulation_list = artipoint(user, Un_G)
     
-    # find the degree centrality of user to check if the user is new or not
-    degree = nx.degree_centrality(G)
-    # print()
-    # print(degree)
+    follow_back_list = followback(user, G)
+    suggestions = list()
+
     
-    # dict of eigenvector_centrality
-    eigenvector_centrality = nx.eigenvector_centrality(G, max_iter=1000)
-    # print()
-    # print(eigenvector_centrality)
-    
-    # sort the user list based on their eigenvector values
-    sorted_users = sorted(eigenvector_centrality.items(), key= lambda a:a[1], reverse=True)
-    
-    # create a suggestion list
-    suggestions = []
-    # create a follow back list 
-    follow = []
-    follow.extend(followback(user, G))
-    # print(follow)
-    
-    articulations = list(nx.articulation_points(UG))
-    print(articulations)
-       
-    user_degree = degree[user]
-    if(user_degree == 0.0):
-        print("Case 1 triggered")
-        # print(nx.articulation_points(G))
-        suggestions.extend(list(articulations))
-        # suggest some users with high influence
-        for useri, _ in sorted_users:
-            if useri != user and G.has_edge(user, useri) == False and useri not in suggestions:
-                suggestions.append(useri)
-        suggestions = [User.objects.get(username=username) for username in suggestions]
-        return suggestions
-    # User with few followers
-    elif( user in articulations):
-        print('Case 2 triggered')
-        # try to recommend friends of friends 
-        #print(artipoint(user, UG))
-        suggestions = community_leader(G, UG)
-        print(suggestions)
-        suggestions.extend(artipoint(user, UG))
-        suggestions = [x for x in suggestions if x not in follow]
-        suggestions = [User.objects.get(username=username) for username in suggestions]
-        return suggestions, follow
-    else:
-        print('case 3 triggered')
-        suggestions.extend(FoFs(user, UG))
-        suggestions = [x for x in suggestions if x not in follow]
-        suggestions = [User.objects.get(username=username) for username in suggestions]
-        return suggestions, follow
+    # check if the particular user node belongs to cold start case
+    if Un_G.degree()[user] == 0.0 : # ensure node has no connections
+        print("Case 1 triggred (user is new to network)")
+        suggestions.extend(eigenvector_followerlist)
+        suggestions.extend(articulation_list)
         
+        print("ar",articulation_list)
+        print("ei",eigenvector_followerlist)
+        suggestions = list(set(suggestions))
+        suggestions = [User.objects.get(username=username) for username in suggestions]
+        return suggestions, list()
+    elif user in nx.articulation_points(Un_G):
+        print('Case 2 triggred (user is an articulation point)')
+        # suggestions.extend(eigenvector_followerlist)
+        suggestions.extend(community_leader(G, Un_G))
+        if user in suggestions: suggestions.remove(user)
+        suggestions.extend(articulation_list)
+        suggestions = list(set(suggestions))
+        suggestions = [x for x in suggestions if x not in follow_back_list]
+        suggestions = [User.objects.get(username=username) for username in suggestions]
+        follow_back_list = [User.objects.get(username=username) for username in follow_back_list]
+        return suggestions, follow_back_list
+    else:
+        print('Case 3 triggred (user has a few connections)')
+        suggestions.extend(eigenvector_followerlist)
+        suggestions.extend(FoFs(user, G))
+        suggestions = list(set(suggestions))
+        suggestions = [x for x in suggestions if x not in follow_back_list]
+        suggestions = [User.objects.get(username=username) for username in suggestions]
+        follow_back_list = [User.objects.get(username=username) for username in follow_back_list]
+        return suggestions, follow_back_list
+        
+        
+        
+    
+# def generate_user_follow_suggestions(user):
+
+#     user, G = generate_user_graph(user)
+#     UG = G.to_undirected()
+#     # print(user,"\n")
+    
+#     # find the degree centrality of user to check if the user is new or not
+#     degree = nx.degree_centrality(G)
+#     # print()
+#     # print(degree)
+    
+#     # dict of eigenvector_centrality
+#     eigenvector_centrality = nx.eigenvector_centrality(G, max_iter=1000)
+#     # print(eigenvector_followers(user, G))
+#     # print()
+#     # print(eigenvector_centrality)
+    
+#     # sort the user list based on their eigenvector values
+#     sorted_users = sorted(eigenvector_centrality.items(), key= lambda a:a[1], reverse=True)
+    
+#     # create a suggestion list
+#     suggestions = []
+#     # create a follow back list 
+#     follow = []
+#     follow.extend(followback(user, G))
+#     # print(follow)
+    
+#     articulations = list(nx.articulation_points(UG))
+#     # print(articulations)
+    
+#     edge = sorted(nx.edge_betweenness_centrality(G).items(), key=lambda x:x[1], reverse=True)
+#     # print(edge)
+       
+#     user_degree = degree[user]
+#     if(user_degree == 0.0):
+#         print("Case 1 triggered")
+#         # print(nx.articulation_points(G))
+#         suggestions.extend(list(articulations))
+#         # suggest some users with high influence
+#         for useri, _ in sorted_users:
+#             if useri != user and G.has_edge(user, useri) == False and useri not in suggestions:
+#                 suggestions.append(useri)
+#         suggestions = [User.objects.get(username=username) for username in suggestions]
+#         # print(suggestions)
+#         return suggestions
+#     # User with few followers
+#     elif( user in articulations):
+#         print('Case 2 triggered')
+#         # try to recommend friends of friends 
+#         # print(artipoint(user, G))
+#         suggestions = community_leader(G, UG)
+#         suggestions.extend(artipoint(user, G))
+#         suggestions = [x for x in suggestions if x not in follow]
+#         suggestions = [User.objects.get(username=username) for username in suggestions]
+#         return suggestions, follow
+#     else:
+#         print('case 3 triggered')
+#         suggestions.extend(FoFs(user, UG))
+#         suggestions = [x for x in suggestions if x not in follow]
+#         suggestions = [User.objects.get(username=username) for username in suggestions]
+#         return suggestions, follow

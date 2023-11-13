@@ -136,26 +136,7 @@ h2 {
     </head>
     <body oncontextmenu='return false' class='snippet-body'>
     <div class="container">
-        {% if followback %}
-        <h2 class="btn btn-primary">Follow Back</h2>
-            <ul class="cards">
-                
-                {% for follow in followback %}
-                <li class="card">
-                    <div>
-                        <p>{{follow}}</p>
-                        <img src="{{ follow.profile.image.url}}" alt="avatar" class="img-fluid"
-                    style="width: 50px; border-radius: 10px;">
-                        <h3 class="card-title"> {{ follow.username }}</h3>
-                    <div class="card-link-wrapper">
-                        
-                    </div>
-                </li>
-                {% endfor %}
-
-           
-             </ul>
-        {%endif%}
+        
         <h2 class="btn btn-primary">Suggestions</h2>
             <ul class="cards">
                 
@@ -173,7 +154,28 @@ h2 {
 
            
              </ul>
+  
+    {% if followback %}
+        <h2 class="btn btn-primary">Follow Back</h2>
+            <ul class="cards">
+                
+                {% for suggest in followback %}
+                <li class="card">
+                    <div>
+                        <img src="{{ suggest.profile.image.url}}" alt="avatar" class="img-fluid"
+                    style="width: 50px; border-radius: 10px;">
+                        <h3 class="card-title"> {{ suggest.username }}</h3>
+                    <div class="card-link-wrapper">
+                        <a href="{% url 'user-posts' suggest.username %}" class="card-link">Follow Back</a>
+                    </div>
+                </li>
+                {% endfor %}
+
+           
+             </ul>
+        {%endif%}
     </div>
+</body>
     <script type='text/javascript'></script>
                                 
     <script type='text/javascript' src=''></script>
