@@ -4,7 +4,7 @@
 This Web-Application was created to demonstrate and analyse the graph theory based recommender model (https://github.com/05kashyap/SocialNet_RecSys).
 
 It has been hosted at: http://kashyap05.pythonanywhere.com/
-#### Note: This project was created as a part of our discrete mathematics course project.
+#### Note: This application was created as a part of our discrete mathematics course project.
 Project Report: 
 # Feature Overview:
 #### -User registration and authentication.
