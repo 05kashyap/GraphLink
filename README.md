@@ -1,4 +1,5 @@
-<img src="https://github.com/05kashyap/GraphLink/assets/120780494/e585e0f8-9f52-483a-9665-2001efdd6264" width="300">
+<img src="https://github.com/05kashyap/GraphLink/assets/120780494/e585e0f8-9f52-483a-9665-2001efdd6264" width="350">
+
 # GraphLink 
 This Web-Application was created to demonstrate and analyse the graph theory based recommender model (https://github.com/05kashyap/SocialNet_RecSys).
 
