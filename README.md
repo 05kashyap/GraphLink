@@ -19,6 +19,21 @@ Project Report:
 #### -personalized "your feed" to view content from users who are being followed
 #### -Featured section with top liked posts
 
+# ScreenShots
+![image](https://github.com/05kashyap/GraphLink/assets/120780494/a94296c7-215c-4a39-aa42-887e34c92f7e)
+
+![image](https://github.com/05kashyap/GraphLink/assets/120780494/09f2a391-9c93-4158-a677-cd5b16175da5)
+
+![image](https://github.com/05kashyap/GraphLink/assets/120780494/7d5bd8e6-ef57-4283-a06f-13c11bbd100b)
+
+# Results
+
+| Evaluation Metrics  | Result |
+| ------------- | ------------- |
+| Accuracy  | 0.7877  |
+| Precision (at k=5)  | 1.0  |
+| Recall (at k=5)  | 0.538095  |
+| F1 Score  | 0.6996  |
 
 Setup Instructions(To run the application locally):
 (Ideally inside a virtual env)
