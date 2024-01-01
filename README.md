@@ -38,6 +38,13 @@ Project Report:
 | Recall (at k=5)  | 0.538095  |
 | F1 Score  | 0.6996  |
 
+| Graph Matching Metrics  | Result |
+| ------------- | ------------- |
+| GED  | 0.6  |
+| Edge overlap ratio  | 0.91044  |
+| Recall (at k=5)  | 0.538095  |
+| Structural Hammering Distance  | 0.19999  |
+
 Setup Instructions(To run the application locally):
 (Ideally inside a virtual env)
 - Clone the repository
