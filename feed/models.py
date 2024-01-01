@@ -53,7 +53,7 @@ class Comment(models.Model):
     created_on = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.title
+        return self.body
 
 
 class LikeManager(models.Manager):
