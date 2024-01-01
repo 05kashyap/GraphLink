@@ -45,6 +45,9 @@ Project Report:
 | Recall (at k=5)  | 0.538095  |
 | Structural Hammering Distance  | 0.19999  |
 
+## Tech Stack
+### Django, Python, Matplotlib, Networkx, SQlite3
+
 Setup Instructions(To run the application locally):
 (Ideally inside a virtual env)
 - Clone the repository
