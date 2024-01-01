@@ -21,10 +21,13 @@ Project Report:
 
 # ScreenShots
 ![image](https://github.com/05kashyap/GraphLink/assets/120780494/a94296c7-215c-4a39-aa42-887e34c92f7e)
+### Control flow of the recommendations system
 
 ![image](https://github.com/05kashyap/GraphLink/assets/120780494/09f2a391-9c93-4158-a677-cd5b16175da5)
+### Real-Time graph generated using a matplotlib + networkx backend
 
 ![image](https://github.com/05kashyap/GraphLink/assets/120780494/7d5bd8e6-ef57-4283-a06f-13c11bbd100b)
+### Recommended users carousel 
 
 # Results
 
