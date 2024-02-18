@@ -52,7 +52,7 @@ Setup Instructions(To run the application locally):
 (Ideally inside a virtual env)
 - Clone the repository
 ```python
-  git clone https://github.com/05kashyap/GDSC_meme_feed
+  git clone [https://github.com/05kashyap/GDSC_meme_feed](https://github.com/05kashyap/GraphLink.git)
 ```
 - Install requirements.txt
   ```python
@@ -60,15 +60,15 @@ Setup Instructions(To run the application locally):
   ```
 - Make migrations
   ```python
-  python manage.py makemigrations
+  python3 manage.py makemigrations
   ```
 - Apply migrations
   ```python
-  python manage.py migrate
+  python3 manage.py migrate
   ```
 - Apply migrations
   ```python
-  python manage.py runserver
+  python3 manage.py runserver
   ```
 
 
