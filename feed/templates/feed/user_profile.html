@@ -21,7 +21,7 @@
                     <div class="flex-shrink-0">
                       <img src="{{ post1.author.profile.image.url }}"
                             alt="avatar" class="img-fluid"
-                            style="width: 180px; border-radius: 10px;">
+                            style="height: 220px; width: 220px; border-radius: 10px;">
                     </div>
                     <div class="flex-grow-1 ms-3">
                       <h5 class="mb-1">{{ view.kwargs.username }}</h5>
@@ -74,7 +74,7 @@
                 
                 {% endwith %}
                 {% else %}
-                <button class='btn btn-primary flex-grow-1' onclick="window.location='{% url 'post-create'  %}'">Create your first meme!</button>
+                <button class='btn btn-primary flex-grow-1' onclick="window.location='{% url 'post-create'  %}'">Create your first post!</button>
                 {% endif %}
           </div>
 
@@ -87,7 +87,7 @@
     </div>
         {% for post in user_posts %}
             <article class="media content-section" style="background-color:#cfe1ff ;">
-                <img class="rounded article-img" src="{{ post.author.profile.image.url }}">
+                <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
                 <div class="media-body">
                 <div class="article-metadata">
                     <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>

@@ -38,6 +38,26 @@
         {% endif %}
         <!-- Display total likes -->
         <p>{{ post.post_likes.count }} Likes</p>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script type="text/javascript">
+          $('.likebutton').click(function(){
+          var catid;
+          catid = $(this).attr("data-catid");
+          $.ajax(
+          {
+              type:"GET",
+              url: "/likepost",
+              data:{
+                       post_id: catid
+              },
+              success: function( data ) 
+              {
+                  $( '#like'+ catid ).remove();
+                  $( '#message' ).text(data);
+              }
+           })
+      });
+      </script>
       </section>
         </article>   
         <section>   

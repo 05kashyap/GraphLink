@@ -12,8 +12,8 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     
-    
-
+    <link href="https://cdn.tailwindcss.com/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -26,7 +26,198 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'feed/main.css' %}">
-   
+    <style>
+      .gradient {
+          background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(100,149,237,1) 100%);
+      }
+      .custom-link {
+        font-size: 18px;
+        margin-right: 20px;
+        color: darkblue !important;
+        font-family: Roboto; /* Add this line */
+        padding : 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        background: linear-gradient(to right, rgba(255,255,255,1) 0%%, rgba(100,149,237,1));
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px); /* For Safari */
+        transition: all 0.5s ease;
+    }
+    .custom-link:hover {
+        color: white !important;
+        background: linear-gradient(to right, rgba(100,149,237,1), rgba(0,0,139,1)); /* stronger gradient */
+        backdrop-filter: blur(10px);
+        --webkit-backdrop-filter: blur(10px); /* For Safari */
+    }
+    .logo {
+      filter: drop-shadow(0 0 0.75rem #000);
+      filter: brightness(70%);
+      padding-right: 10px;
+      margin-bottom: 20px;
+    }
+    {
+      margin: 0;
+      padding: 0;
+    }
+    
+    a{
+      text-decoration: none;
+    }
+    
+    .menu {
+      position: relative;
+      margin-top: 15%;
+      left: 50%;
+      width: 0px;
+      transform: translate(-50%, 55%);
+    }
+    
+    .toggle {
+      display: none;
+    }
+    
+    .toggle + .style {
+        width: 200px;
+        height: 124px;
+        border-radius: 50%;
+        cursor: pointer;
+        transform: translate(-50%, -50%) scale(1);
+        z-index: 5;
+        display: block;
+        max-width: 200px;
+        margin-bottom: 0;
+        background: #ff0000;
+        color: #fff;
+        font-size: 2.5em;
+        padding-top: 75px;
+        text-align: center;
+       -webkit-transition: all .8s;
+       -moz-transition: all .8s;
+       -o-transition: all .8s;
+       -ms-transition: all .8s;
+       transition: all .8s;
+    }
+    
+    .menu p{
+        max-width: 85px;
+        text-align: center;
+        margin: 0 auto;
+        line-height: 15px;
+        padding-top: 50px;
+        font-weight: 700;
+        font-size: 2em;
+    }
+    
+    .toggle + .style:hover{
+      -webkit-box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, .7);
+        -moz-box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, .7);
+        -ms-box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, .7);
+        -o-box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, .7);
+        box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, .7);
+    }
+    
+    .toggle:checked + .style {
+      transform: translate(-50%, -50%) scale(.5);
+    }
+    
+    .menu input[type=checkbox] + label:before {
+        content: "";
+        position: absolute;
+    }
+    
+    .toggle + .style:before, .toggle + .style:after {
+      content: "";
+      position: absolute;
+      margin: -3px;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+    
+    .toggle + .style:before {
+      width: 30px;
+      height: 0px;
+      left: 10px;
+      top: 25px;
+    }
+    
+    .toggle + .style:after {
+      width: 0px;
+      height: 30px;
+      left: 25px;
+      top: 10px;
+    }
+    
+    .toggle:checked + .style:before, .toggle:checked + .style:after {
+      transform: rotate(135deg);
+    }
+    
+    .toggle ~ .tab {
+        position: absolute;
+        background: #ff0000;
+        color: #fff;
+        width: 120px;
+        height: 120px;
+        left: 0px;
+        top: 0px;
+        transform: translate(-50%, -50%) scale(0);
+        transition: all 0.3s;
+        opacity: 0;
+        border-radius: 50%;
+    }
+    
+    .toggle:checked ~ .tab {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    
+    .menu > .toggle:checked ~ .tab:nth-of-type(1) {
+      top: -122px;
+      left: 0px;
+      transition-delay: 0s;
+    }
+    
+    .menu > .toggle:checked ~ .tab:nth-of-type(2) {
+      top: -74px;
+      left: 120px;
+      transition-delay: 0.125s;
+    }
+    
+    .menu > .toggle:checked ~ .tab:nth-of-type(3) {
+      top: 56px;
+      left: 115px;
+      transition-delay: 0.25s;
+    }
+    
+    .menu > .toggle:checked ~ .tab:nth-of-type(4) {
+      top: 122px;
+      left: 0px;
+      transition-delay: 0.375s;
+    }
+    
+    .menu > .toggle:checked ~ .tab:nth-of-type(5) {
+      top: 56px;
+      left: -115px;
+      transition-delay: 0.5s;
+    }
+    
+    .menu > .toggle:checked ~ .tab:nth-of-type(6) {
+      top: -74px;
+      left: -120px;
+      transition-delay: 0.625s;
+    }
+    
+    .menu > .toggle:checked ~ .tab:nth-of-type(7) {
+      top: 0px;
+      left: -133.33333px;
+      transition-delay: 0.75s;
+    }
+    
+    .menu > .toggle:checked ~ .tab:nth-of-type(8) {
+      top: -94.2809px;
+      left: -94.2809px;
+      transition-delay: 0.875s;
+    }
+  </style>
 
 
 
@@ -37,75 +228,61 @@
     {% endif %}
 	
 </head>
-<body  style="background-color:Black;">
+<body class="gradient" style="background-color:Black;">
     <header id="page-top" >
       
-        <nav class="navbar navbar-expand-sm navbar-light" id="neubar">
-          <div class="container">
-            <a class="navbar-brand mr-5 text-primary" href="{% url 'feed-home' %}">
-              <img src="{% static 'feed/assets/logo-no-background.svg' %}" alt="Logo" width="150" height="50">
+      <nav class="flex items-center justify-between flex-wrap p-6 gradient bg-opacity-60 transition-all duration-500 ease-in-out text-white">
+        <div class="flex items-center flex-shrink-0 text-white mr-6">
+            <a href="{% url 'feed-home' %}">
+                <img class="logo" src="{% static 'feed/assets/logo-no-background.svg' %}" alt="Logo" width="200" height="75">
             </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-        
-            <div class=" collapse navbar-collapse" id="navbarNavDropdown">
-              <ul class="navbar-nav ms-auto ">
-                <li class="nav-item">
-                  {% url 'feed-home' as the_url %}
-                  {% if request.get_full_path == the_url %}
-                  <a class="nav-link mx-2 active" aria-current="page" href="{% url 'feed-home' %}">Front Page</a>
-                  {% else %}
-                  <a class="nav-link mx-2 text-primary" aria-current="page" href="{% url 'feed-home' %}">Front Page</a>
-                </li>
-                  {% endif %}
+        </div>
+        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+            <div class="text-sm lg:flex-grow">
+                <a href="{% url 'feed-home' %}" class="custom-link">
+                    Front Page
+                </a>
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                  {% url 'my-feed' as s_url %}
-                  {% if request.get_full_path == s_url %}
-                  <a class="nav-link mx-2 active"  href="{% url 'my-feed' %}">My Feed</a>
-                  {% else %}
-                  <a class="nav-link mx-2 text-primary"  href="{% url 'my-feed' %}">My Feed</a>
-                  {% endif %}
-                </li>
-                <li class="nav-item">
-                  {% url 'graph' as se_url %}
-                  {% if request.get_full_path == se_url %}
-                  <a class="nav-link mx-2 active"  href="{% url 'graph' %}">Graph</a>
-                  {% else %}
-                  <a class="nav-link mx-2 text-primary"  href="{% url 'graph' %}">Graph</a>
-                  {% endif %}
-                </li>
+                <a href="{% url 'my-feed' %}" class="custom-link">
+                    My Feed
+                </a>
+                <a href="{% url 'graph' %}" class="custom-link">
+                    Graph
+                </a>
                 {% endif %}
-               
-                <li class="nav-item dropdown">
-                  <a class="nav-link mx-2 dropdown-toggle text-primary" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Profile
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    {% if user.is_authenticated %}
-                    <li><a class="dropdown-item" href="{% url 'post-create' %}">Create Post</a></li>
-                    <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                    <li><a class="dropdown-item" href="{% url 'curr-user-posts' %}">My posts</a></li>
-
-                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                    {% else %}
-                    <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
-                    <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
-                    {% endif %}
-                  </ul>
-                </li>
-                {% if user.is_authenticated %}
-                <img src="{{ user.profile.image.url}}" alt="avatar" class="img-fluid"
-                style="width: 50px; border-radius: 10px;">&nbsp;&nbsp;&nbsp;
-             
-                {% endif %}
-              </ul>
             </div>
-          </div>
-          
-        </nav>
+            {% if user.is_authenticated %}
+            <div>
+              <div class="container">
+                <div class='menu'>
+                  <input class='toggle' id='menu' type='checkbox'>
+                  <label class='style' for='menu'>
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                  </label>
+                  <a class='tab' href='#'>
+                    <p>I</p>
+                  </a>
+                  <a class='tab' href='#'>
+                    <p>II</p>
+                  </a>
+                  <a class='tab' href='#'>
+                    <p>III</p>
+                  </a>
+                  <a class='tab' href='#'>
+                    <p>IV</p>
+                  </a>
+                  <a class='tab' href='#'>
+                    <P>V</P>
+                  </a>
+                  <a class='tab' href='#'>
+                    <P>VI</P>
+                  </a>
+                </div><!-- menu -->
+              </div><!-- container -->
+            </div>
+            {% endif %}
+        </div>
+    </nav>
       </header>
 
 	
@@ -119,7 +296,9 @@
                 </div>
               {% endfor %}
             {% endif %}
+           
             {% block content %}{% endblock %}
+           
           </div>
          
         </div>

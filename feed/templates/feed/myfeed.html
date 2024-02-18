@@ -3,26 +3,23 @@
     <section >
         
         {% for post in posts %}
-            <article class="media content-section" style="background-color:#cfe1ff ;">
-                <img class="rounded article-img" src="{{ post.author.profile.image.url }}">
-                <div class="media-body">
-                <div class="article-metadata">
-                    <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                </div>
-                <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-                {% if post.meme %}
-                <img src="{{ post.meme }}" width="300" height="330"> 
-                {% endif %}
-                </div>
-                {% if user.is_authenticated %}
-                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
-                <p><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.post_likes.count }} Likes</a></p>
-                {% else %}
-                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
-                <p><span title=" Log in to like "><a class="article-title"href="{% url 'login' %}">{{ post.post_likes.count }} Likes</a></span></p>
-                {% endif %}
-            </article>
+            <article class="media content-section rounded-lg bg-opacity-75" style="background-color:#cfe1ff ;">
+    <img class="rounded article-img" src="{{ post.author.profile.image.url }}">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        </div>
+        <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+    </div>
+    {% if user.is_authenticated %}
+    <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
+    <p><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.post_likes.count }} Likes</a></p>
+    {% else %}
+    <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-left: -0.16rem;"></i>
+    <p><span title=" Log in to like "><a class="article-title"href="{% url 'login' %}">{{ post.post_likes.count }} Likes</a></span></p>
+    {% endif %}
+</article>
         {% endfor %}
         </section>
         {% if is_paginated %}
