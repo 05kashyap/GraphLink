@@ -95,13 +95,16 @@ def eigenvector_followers(user: str, graph: nx.DiGraph):
             if i in followerslist: followerslist.remove(i)
         return followerslist
 
-def community_leader(G, UG):
+def community_leader(user, G, UG):
     communities = sorted(nxcom.greedy_modularity_communities(G), key=len, reverse=True)
     print(list(communities[0]))
     #cmli = list(communities[0])
     print(G.degree()[list(communities[0])[0]])
     #Keymax = max(cmli, key= lambda x: cmli[x])
     #print(Keymax)
+    
+    friends = list(G.neighbors(user))
+    
     heads = []
     deg = dict(UG.degree())
     #Get most influential node for each 
@@ -114,4 +117,6 @@ def community_leader(G, UG):
         com_head = k[v.index(max(v))]
         print(f"community head: {com_head}")
         heads.append(com_head)
+        
+    heads = list(set(heads) - set(friends))
     return heads

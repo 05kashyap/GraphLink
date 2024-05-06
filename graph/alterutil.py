@@ -173,7 +173,7 @@ def generate_suggestions(user):
     elif user in nx.articulation_points(Un_G):
         print('Case 2 triggred (user is an articulation point)')
         # suggestions.extend(eigenvector_followerlist)
-        suggestions.extend(community_leader(G, Un_G))
+        suggestions.extend(community_leader(user, G, Un_G))
         if user in suggestions: suggestions.remove(user)
         suggestions.extend(articulation_list)
         suggestions = list(set(suggestions))
