@@ -91,7 +91,7 @@
 }
 
   .gradient {
-      background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(100,149,237,1) 100%);
+      background: linear-gradient(90deg, rgb(0, 0, 0) 0%, rgba(100,149,237,1) 100%);
   }
 
   .auth-links {
@@ -106,7 +106,7 @@
     padding : 10px;
     padding-bottom: 10px;
     border-radius: 8px;
-    background: linear-gradient(to right, rgba(100,149,237,1), rgba(100,149,237,1));
+    background: linear-gradient(to right, rgba(182, 206, 255, 0.9), rgba(182, 206, 255, 0.9));
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px); /* For Safari */
     transition: all 0.5s ease;
@@ -115,13 +115,13 @@
 .custom-link:hover {
     color: white !important;
     text-decoration: none;
-    background: linear-gradient(to right, rgba(100,149,237,1), rgba(0,0,139,1)); /* stronger gradient */
+    background: linear-gradient(to right, rgba(0, 0, 139, 1),  rgba(0, 0, 139, 1)); /* stronger gradient */
     backdrop-filter: blur(10px);
     --webkit-backdrop-filter: blur(10px); /* For Safari */
 }
 .logo {
-  filter: drop-shadow(0 0 0.75rem #000);
-  filter: brightness(70%);
+  /* filter: drop-shadow(0 0 0.75rem #000); */
+  /* filter: brightness(70%); */
   padding-right: 10px;
   margin-bottom: 20px;
 }
