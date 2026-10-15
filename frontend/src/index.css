@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  .dark {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100;
+    font-feature-settings: "cv11", "ss01";
+  }
+  ::selection {
+    @apply bg-accent-200 text-accent-950 dark:bg-accent-800 dark:text-white;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent-500 ring-offset-2 ring-offset-white dark:ring-offset-zinc-950;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900;
+  }
+  .input {
+    @apply block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 text-zinc-900 placeholder:text-zinc-400
+      focus:border-accent-500 focus:ring-accent-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100
+      dark:placeholder:text-zinc-500;
+  }
+  .input-error {
+    @apply border-red-400 focus:border-red-500 focus:ring-red-500 dark:border-red-500/70;
+  }
+  .muted {
+    @apply text-zinc-500 dark:text-zinc-400;
+  }
+  .dot-grid {
+    background-image: radial-gradient(circle at 1px 1px, rgb(161 161 170 / 0.28) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+}
+
+/* Tooltip rendered by force-graph */
+.graph-tooltip {
+  @apply !rounded-lg !border !border-zinc-200 !bg-white !px-3 !py-2 !font-sans !text-xs !text-zinc-700 !shadow-lg
+    dark:!border-zinc-700 dark:!bg-zinc-800 dark:!text-zinc-200;
+}

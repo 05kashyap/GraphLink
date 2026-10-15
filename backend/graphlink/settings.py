@@ -75,7 +75,7 @@ WSGI_APPLICATION = "graphlink.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": os.environ.get("DJANGO_DB_PATH", BASE_DIR / "db.sqlite3"),
     }
 }
 
@@ -117,9 +117,6 @@ REST_FRAMEWORK = {
 # Vite dev server proxies /api to Django, so cookies stay first-party.
 CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_SAMESITE = "Lax"
-
-# Base URL of the frontend, used to build links in password reset emails.
-FRONTEND_URL = os.environ.get("FRONTEND_URL", "")
 
 EMAIL_BACKEND = os.environ.get(
     "DJANGO_EMAIL_BACKEND",
