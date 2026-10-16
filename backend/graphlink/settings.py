@@ -7,6 +7,7 @@ compiled React frontend (../frontend/dist) from the same origin.
 import os
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
 from django.core.management.utils import get_random_secret_key
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,11 +18,16 @@ def env_list(name, default):
     return [item.strip() for item in os.environ.get(name, default).split(",") if item.strip()]
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", get_random_secret_key())
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+if not SECRET_KEY:
+    if not DEBUG:
+        # A random key would change on every reload and log everyone out.
+        raise ImproperlyConfigured("Set DJANGO_SECRET_KEY when DJANGO_DEBUG is False.")
+    SECRET_KEY = get_random_secret_key()
 
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "*")
 CSRF_TRUSTED_ORIGINS = env_list(
@@ -97,7 +103,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 WHITENOISE_ROOT = FRONTEND_DIST if FRONTEND_DIST.exists() else None
 
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = os.environ.get("DJANGO_MEDIA_ROOT", BASE_DIR / "media")
 MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -117,6 +123,13 @@ REST_FRAMEWORK = {
 # Vite dev server proxies /api to Django, so cookies stay first-party.
 CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_SAMESITE = "Lax"
+
+if not DEBUG:
+    # HTTPS is terminated by the host's proxy (e.g. PythonAnywhere), which
+    # reports the original scheme in X-Forwarded-Proto.
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 EMAIL_BACKEND = os.environ.get(
     "DJANGO_EMAIL_BACKEND",
