@@ -68,34 +68,37 @@ frontend/   React + TypeScript + Vite + Tailwind CSS single-page app
 
 ## Running locally
 
-Requirements: Python 3.10+ and Node.js 18+.
+Requirements: [Miniconda](https://docs.conda.io/en/latest/miniconda.html) or
+[Miniforge](https://github.com/conda-forge/miniforge). The conda environment provides both Python and
+Node.js, so nothing else needs to be installed first.
 
-**Backend**
+**One-time setup** (from the repository root)
 
 ```bash
-cd backend
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver          # http://127.0.0.1:8000
+conda env create -f environment.yml
+conda activate graphlink
+cd frontend && npm install && cd ..
+cd backend && python manage.py migrate
 ```
 
 The repository ships with a small demo database (`backend/db.sqlite3`). Create your own account from the
 sign-up page, or an admin with `python manage.py createsuperuser`.
 
-**Frontend** (in a second terminal)
+**Run the app** (two terminals, each starting with `conda activate graphlink`)
 
 ```bash
-cd frontend
-npm install
-npm run dev                         # http://localhost:5173
+cd backend && python manage.py runserver    # API on http://127.0.0.1:8000
+cd frontend && npm run dev                  # app on http://localhost:5173
 ```
+
+If `backend/requirements.txt` changes later, update the environment with
+`conda env update -f environment.yml --prune`.
 
 **Tests and checks**
 
 ```bash
-cd backend && python manage.py test
-cd frontend && npm run lint && npm run build
+(cd backend && python manage.py test)
+(cd frontend && npm run lint && npm run build)
 ```
 
 ## Deploying (single host, e.g. PythonAnywhere)

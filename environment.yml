@@ -1,0 +1,15 @@
+# Conda environment for local development: Python for the Django backend and
+# Node.js for the React frontend. Python packages come from
+# backend/requirements.txt so the versions live in one place.
+#
+#   conda env create -f environment.yml
+#   conda activate graphlink
+name: graphlink
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - nodejs=20
+  - pip
+  - pip:
+      - -r backend/requirements.txt
