@@ -13,19 +13,19 @@ const CASES: { icon: ReactNode; title: string; body: string; algorithms: string 
     icon: <Sprout className="h-5 w-5" />,
     title: "Cold start",
     body: "A brand-new user has no edges, so there's nothing local to learn from. Start with the people the whole network listens to.",
-    algorithms: "Eigenvector centrality · Articulation points",
+    algorithms: "",//Eigenvector centrality · Articulation points
   },
   {
     icon: <Waypoints className="h-5 w-5" />,
     title: "You're a bridge",
     body: "If removing you would split the graph, you sit between communities. Connect with each community's hub and with other bridges.",
-    algorithms: "Greedy modularity communities · Articulation points",
+    algorithms: "", //Greedy modularity communities · Articulation points
   },
   {
     icon: <Users className="h-5 w-5" />,
     title: "Growing your circle",
     body: "With a few connections, look two hops out: people your follows follow, plus the network's most influential users.",
-    algorithms: "Friends of friends · Eigenvector centrality",
+    algorithms: "",//"Friends of friends · Eigenvector centrality",
   },
 ];
 
@@ -121,7 +121,7 @@ export default function Landing() {
       <main>
         <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-[1fr_1.1fr] lg:pt-16">
           <div>
-            <p className="text-sm font-medium text-accent-600 dark:text-accent-400">A graph-theory recommender, live</p>
+            <p className="text-sm font-medium text-accent-600 dark:text-accent-400">A graph-theory based recommender system</p>
             <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
               A social network that shows its working.
             </h1>
@@ -167,7 +167,7 @@ export default function Landing() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        {/* <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <h2 className="text-2xl font-semibold tracking-tight">How well it works</h2>
           <p className="muted mt-2 max-w-2xl">
             Evaluated against held-out follow edges, and by comparing the recommended graph with the real one.
@@ -176,7 +176,7 @@ export default function Landing() {
             <MetricsTable caption="Recommendation metrics" rows={EVALUATION} />
             <MetricsTable caption="Graph matching metrics" rows={GRAPH_MATCHING} />
           </div>
-        </section>
+        </section> */}
       </main>
 
       <footer className="border-t border-zinc-200 dark:border-zinc-800">
