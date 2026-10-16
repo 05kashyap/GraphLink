@@ -29,46 +29,11 @@ const CASES: { icon: ReactNode; title: string; body: string; algorithms: string 
   },
 ];
 
-const EVALUATION = [
-  ["Accuracy", "0.788"],
-  ["Precision @ 5", "1.000"],
-  ["Recall @ 5", "0.538"],
-  ["F1 score", "0.700"],
-];
-
-const GRAPH_MATCHING = [
-  ["Graph edit distance", "0.600"],
-  ["Edge overlap ratio", "0.910"],
-  ["Structural Hamming distance", "0.200"],
-];
-
 const AUTHORS = [
   ["kashyap05", "https://github.com/05kashyap"],
   ["adya2004", "https://github.com/adya2004"],
   ["Vijayvkb007", "https://github.com/Vijayvkb007"],
 ];
-
-function MetricsTable({ caption, rows }: { caption: string; rows: string[][] }) {
-  return (
-    <div className="card overflow-hidden">
-      <table className="w-full text-sm">
-        <caption className="border-b border-zinc-200 px-4 py-3 text-left text-sm font-semibold dark:border-zinc-800">
-          {caption}
-        </caption>
-        <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
-          {rows.map(([metric, value]) => (
-            <tr key={metric}>
-              <th scope="row" className="px-4 py-2.5 text-left font-normal text-zinc-600 dark:text-zinc-400">
-                {metric}
-              </th>
-              <td className="px-4 py-2.5 text-right font-medium tabular-nums">{value}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
 
 function LivePreview() {
   const { data, isLoading } = useGraph();
@@ -160,23 +125,13 @@ export default function Landing() {
                   </div>
                   <h3 className="mt-4 font-semibold">{item.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{item.body}</p>
-                  <p className="mt-4 text-xs font-medium text-zinc-500">{item.algorithms}</p>
+                  {item.algorithms && <p className="mt-4 text-xs font-medium text-zinc-500">{item.algorithms}</p>}
                 </li>
               ))}
             </ol>
           </div>
         </section>
 
-        {/* <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <h2 className="text-2xl font-semibold tracking-tight">How well it works</h2>
-          <p className="muted mt-2 max-w-2xl">
-            Evaluated against held-out follow edges, and by comparing the recommended graph with the real one.
-          </p>
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            <MetricsTable caption="Recommendation metrics" rows={EVALUATION} />
-            <MetricsTable caption="Graph matching metrics" rows={GRAPH_MATCHING} />
-          </div>
-        </section> */}
       </main>
 
       <footer className="border-t border-zinc-200 dark:border-zinc-800">
