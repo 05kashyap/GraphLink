@@ -101,27 +101,30 @@ If `backend/requirements.txt` changes later, update the environment with
 (cd frontend && npm run lint && npm run build)
 ```
 
-## Deploying (single host, e.g. PythonAnywhere)
+## Deploying
+
+The live site runs on PythonAnywhere. On every push to `main`, GitHub Actions
+(`.github/workflows/deploy-branch.yml`) runs the tests, builds the frontend and publishes a `deploy` branch
+that includes `frontend/dist`. On the server, update with:
 
 ```bash
-cd frontend && npm ci && npm run build      # writes frontend/dist, served by Django
-cd ../backend && pip install -r requirements.txt
-python manage.py migrate && python manage.py collectstatic --noinput
+bash ~/GraphLink/deploy/pythonanywhere/deploy.sh
 ```
 
-Environment variables:
+First-time setup, Web-tab configuration and troubleshooting are in
+[`deploy/pythonanywhere/README.md`](deploy/pythonanywhere/README.md).
+
+Production settings come from environment variables (see
+[`deploy/pythonanywhere/env.example`](deploy/pythonanywhere/env.example)):
 
 | Variable | Purpose |
 | --- | --- |
-| `DJANGO_SECRET_KEY` | Secret key (required in production) |
 | `DJANGO_DEBUG` | `False` in production |
+| `DJANGO_SECRET_KEY` | Secret key; required when `DJANGO_DEBUG=False` |
 | `DJANGO_ALLOWED_HOSTS` | Comma-separated hostnames |
 | `DJANGO_CSRF_TRUSTED_ORIGINS` | Comma-separated origins, e.g. `https://example.pythonanywhere.com` |
-| `DJANGO_DB_PATH` | Optional path to the SQLite database |
+| `DJANGO_DB_PATH`, `DJANGO_MEDIA_ROOT` | Where the SQLite database and uploads live (default: inside `backend/`) |
 | `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD` | Gmail SMTP credentials for password reset emails |
-
-With `DJANGO_DEBUG=False`, serve `/media/` (user uploads) from `backend/media` using your host's static-file
-mapping.
 
 ## Tech stack
 
